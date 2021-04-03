@@ -4,6 +4,7 @@ import Login from "./Pages/Login";
 import Home from "./Pages/Home";
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
+import Register from "./Pages/Register";
 
 const Stack = createStackNavigator();
 
@@ -17,6 +18,7 @@ export default class App extends React.Component {
         <Stack.Navigator initialRouteName = "Login">
           <Stack.Screen name = "Login" component = {Login}></Stack.Screen>
           <Stack.Screen name = "Home" component = {Home}/>
+          <Stack.Screen name = "Register" component = {Register}/>
         </Stack.Navigator>
       </NavigationContainer>
     );
