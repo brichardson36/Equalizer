@@ -43,7 +43,7 @@ export default function Login(props){
         <TouchableOpacity onPress = {() => props.navigation.navigate('Home', {email: email,})} style={styles.loginBtn}>
           <Text style={styles.loginText}>LOGIN</Text>
         </TouchableOpacity>
-        <TouchableOpacity>
+        <TouchableOpacity >
           <Text style={styles.loginText}>Signup</Text>
         </TouchableOpacity>
         </View>
