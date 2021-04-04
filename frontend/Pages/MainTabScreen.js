@@ -10,6 +10,7 @@ import ExploreScreen from "./ExploreScreen";
 
 const HomeStack = createStackNavigator();
 const LoginStack = createStackNavigator();
+const ProfileStack = createStackNavigator();
 const Tab=createMaterialBottomTabNavigator();
 
 const MainTabScreen=()=>(
@@ -43,7 +44,7 @@ const MainTabScreen=()=>(
     
     <Tab.Screen
       name="Profile"
-      component={HomeStackScreen}
+      component={ProfileStackScreen}
       options={{
         tabBarLabel: 'Profile',
         tabBarColor:'#694fad',
@@ -116,4 +117,28 @@ const HomeStackScreen=({navigation})=>(
       )
       }}/>
     </LoginStack.Navigator>
+  );
+
+  const ProfileStackScreen=({navigation})=>(
+    <ProfileStack.Navigator  
+    screenOptions={{
+      headerStyle:{
+        backgroundColor: '#694fad',
+      },
+      headerTintColor:'#fff',
+      headerTitleStyle:{
+        fontWeight:'bold',
+        //alignSelf: 'center',
+      },
+    }}
+    >
+    
+      <ProfileStack.Screen name = "Profile" component = {Profile}options={{
+      headerLeft:()=>( 
+        <Icon.Button name="ios-menu" size={25}
+        backgroundColor= '#694fad'
+        onPress={()=>navigation.openDrawer()}></Icon.Button>
+      )
+      }}/>
+    </ProfileStack.Navigator>
   );
