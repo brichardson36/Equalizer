@@ -91,6 +91,7 @@ export function DrawerContent(props){
                         label="Support"
                         onPress={()=>{props.navigation.navigate('SupportScreen')}}  
                     />
+                    
                         
                     </Drawer.Section>
                     <Drawer.Section title="Preferences">
