@@ -5,8 +5,8 @@ const morgan = require('morgan');
 const mongoose = require('mongoose');
 const cors = require('cors');
 require('dotenv/config'); 
-const authJwt = require('./helper/jwt');
-const errorHandler = require('./helper/error-handler')
+//const authJwt = require('./helper/jwt');
+//const errorHandler = require('./helper/error-handler')
 
 // const Api = require('amazon-pa-api50')
 // const Config = require('amazon-pa-api50/lib/config')
@@ -27,8 +27,8 @@ app.options("*", cors());
 // Middleware
 app.use(bodyParser.json());
 app.use(morgan('tiny'));
-app.use(authJwt());
-app.use(errorHandler);
+//app.use(authJwt());
+//app.use(errorHandler);
 
 
 
