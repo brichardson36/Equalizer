@@ -71,7 +71,7 @@ async function democompare() {
   }
 }
 
-democompare();
+//democompare();
 
  
 
