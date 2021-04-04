@@ -1,5 +1,5 @@
 import 'react-native-gesture-handler';
-import React from 'react';
+import React, {useState} from 'react';
 import { StyleSheet, Text, View, TextInput, TouchableOpacity } from 'react-native';
 
 import { NavigationContainer } from '@react-navigation/native';
@@ -9,25 +9,25 @@ import MainTabScreen from "./Pages/MainTabScreen";
 import {DrawerContent} from './Pages/DrawerContent';
 import SupportScreen from './Pages/SupportScreen';
 import RootStackScreen from './Pages/RootStackScreen';
+import AppScreen from './AppScreen'
 const Drawer = createDrawerNavigator();
 
 
 
 export default class App extends React.Component {
   render(){
-    return (
-      // <View style = {styles.container}>
-      //   <Login></Login>
-      // </View>
-      <NavigationContainer style = {styles.container}>
-        <RootStackScreen/>
-        {/*<Drawer.Navigator initialRouteName="Home" drawerContent={props=><DrawerContent{... props}/>}>
-        <Drawer.Screen name="HomeDrawer" component={MainTabScreen} />
-        <Drawer.Screen name="SupportScreen" component={SupportScreen} />
-    </Drawer.Navigator>*/}
+    // return (
+    //   (!loggedIn &
+    //   <NavigationContainer style = {styles.container}>
+    //     <RootStackScreen/>
 
-      </NavigationContainer>
-    );
+    //   </NavigationContainer>
+    // ) || loggedIn &
+    // <Drawer.Navigator initialRouteName="Home" drawerContent={props=><DrawerContent{... props}/>}>
+    //   <Drawer.Screen name="HomeDrawer" component={MainTabScreen} />
+    //   <Drawer.Screen name="SupportScreen" component={SupportScreen} />
+    // </Drawer.Navigator>)
+    return(<AppScreen></AppScreen>)
   }
 }
 

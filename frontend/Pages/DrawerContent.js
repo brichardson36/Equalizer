@@ -16,12 +16,14 @@ import {
 } from '@react-navigation/drawer';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons'
 import Icon2 from 'react-native-vector-icons/Ionicons';
+import {AuthContext} from '../AppScreen';
 export function DrawerContent(props){
 
     const [isDarkTheme,setIsDarkTheme ]=React.useState(false);
     const toggleTheme=()=>{
         setIsDarkTheme(!isDarkTheme);
     }
+    const { signOut } = React.useContext(AuthContext);
     return(
         <View style={{flex:1}}>
             <DrawerContentScrollView {...props}>
@@ -35,8 +37,8 @@ export function DrawerContent(props){
                                 size={50}
                             />
                             <View style={{marginLeft:15,flexDirection:'column'}}>
-                                <Title style={styles.title}>Nazanin Tabatabaei</Title>
-                                <Caption style={styles.caption}>@Nazanyntbt</Caption>
+                                <Title style={styles.title}>Ryan Faulkner</Title>
+                                <Caption style={styles.caption}>@ryanf58795</Caption>
                             </View>
                         </View>
                         <View style={styles.row}>
@@ -78,7 +80,7 @@ export function DrawerContent(props){
                             />
                         )}
                         label="Settings"
-                        onPress={()=>{}}  
+                        onPress={()=>{props.navigation.navigate('Settings')}}  
                     />
                     <DrawerItem 
                         icon={({color,size})=>(
@@ -118,7 +120,9 @@ export function DrawerContent(props){
                     />
                 )}
                 label="Sign Out"
-                onPress={()=>{}}  
+                onPress={()=>{
+                    signOut()
+                }}  
                 />
                 
                 

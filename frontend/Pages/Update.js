@@ -1,11 +1,11 @@
 import React, {useEffect} from 'react';
 import { StyleSheet, Text, View, TextInput, TouchableOpacity } from 'react-native';
 
-export default function Home() {
+export default function Update() {
 
     return(
         <View>
-            <Text>Explore</Text>
+            <Text>Hi</Text>
         </View>
     )
 }

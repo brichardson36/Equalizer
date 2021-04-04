@@ -5,7 +5,14 @@ import * as Animatable from 'react-native-animatable';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import Feather from 'react-native-vector-icons/Feather';
 import {LinearGradient} from 'expo-linear-gradient';
+
+import {AuthContext} from '../AppScreen';
+
 const SignInScreen = ({navigation}) => {
+    
+    const [username, setUsername] = React.useState('ryfis');
+    const [password, setPassword] = React.useState('ryfis2');
+    const { signIn } = React.useContext(AuthContext);
     const [data, setData] = React.useState({
         email: '',
         password: '',
@@ -126,15 +133,21 @@ const SignInScreen = ({navigation}) => {
                 
             </View>
             <View style={styles.button}>
-                    <LinearGradient
-                    colors={['#08d4c4', '#01ab9d']}
-                    style={styles.signIn}
-                    >
-                        <Text style={[styles.textSign,{
-                            color:'#fff'
-                        }
-                        ]}>Sign In</Text>
-                    </LinearGradient>
+                        <LinearGradient 
+                        colors={['#08d4c4', '#01ab9d']}
+                        style={styles.signIn}
+                        >
+                            <TouchableOpacity onPress = {()=>{
+                                signIn({data})
+                            }}>
+                                <Text style={[styles.textSign,{
+                                    color:'#fff'
+                                }
+                                ]}>
+                                    Sign In
+                                </Text>
+                            </TouchableOpacity>
+                        </LinearGradient>
                     <TouchableOpacity
                         onPress={()=>navigation.navigate('SignUpScreen')}
                         style={[styles.signIn,{

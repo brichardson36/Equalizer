@@ -6,11 +6,15 @@ import { createMaterialBottomTabNavigator } from '@react-navigation/material-bot
 import Login from "./Login";
 import Home from "./Home";
 import Profile from "./Profile";
+import Update from "./Update";
 import ExploreScreen from "./ExploreScreen";
+import SettingsScreen from "./SettingsScreen"
 
 const HomeStack = createStackNavigator();
 const LoginStack = createStackNavigator();
 const ProfileStack = createStackNavigator();
+const UpdateStack = createStackNavigator();
+const ExploreStack = createStackNavigator();
 const Tab=createMaterialBottomTabNavigator();
 
 const MainTabScreen=()=>(
@@ -32,7 +36,7 @@ const MainTabScreen=()=>(
     />
     <Tab.Screen
       name="Notifications"
-      component={HomeStackScreen}
+      component={UpdateStackScreen}
       options={{
         tabBarLabel: 'Updates',
         tabBarColor:'#1f65ff',
@@ -55,7 +59,7 @@ const MainTabScreen=()=>(
     />
     <Tab.Screen
       name="Explore"
-      component={HomeStackScreen}
+      component={ExploreStackScreen}
       options={{
         tabBarLabel: 'Explore',
         tabBarColor:'#d02860',
@@ -142,3 +146,49 @@ const HomeStackScreen=({navigation})=>(
       }}/>
     </ProfileStack.Navigator>
   );
+
+  const UpdateStackScreen=({navigation})=>(
+    <UpdateStack.Navigator
+    screenOptions={{
+      headerStyle:{
+        backgroundColor: '#1f65ff',
+      },
+      headerTintColor:'#fff',
+      headerTitleStyle:{
+        fontWeight:'bold'
+      },
+    }}
+    >
+      <UpdateStack.Screen name = "Update" component = {Update} options = {{
+        headerLeft:()=>(
+          <Icon.Button name = "ios-notifications" size = {25}
+          backgroundColor = "#1f65ff"
+          onPress={()=>navigation.openDrawer()}>
+          </Icon.Button>
+        )
+      }}/>
+    </UpdateStack.Navigator>
+  )
+
+  const ExploreStackScreen=({navigation})=>(
+    <ExploreStack.Navigator
+    screenOptions={{
+      headerStyle:{
+        backgroundColor: '#d02860'
+      },
+      headerTintColor:'#fff',
+      headerTitleStyle:{
+        fontWeight:'bold'
+      },
+    }}
+    >
+      <ExploreStack.Screen name = "Explore" component = {ExploreScreen} options = {{
+        headerLeft:()=>(
+          <Icon.Button name = "ios-aperture" size = {25}
+          backgroundColor = "#d02860"
+          onPress={()=> navigation.openDrawer()}>
+          </Icon.Button>
+        )
+      }}/>
+    </ExploreStack.Navigator>
+  )
