@@ -8,7 +8,7 @@ const SplashScreen = ({navigation}) => {
     return (
       <View style={styles.container}>
         <View style={styles.header}>
-            <Text style={styles.title}>Equalizer</Text>
+            <Text style={styles.main_title}>Equalizer</Text>
         </View>
         <Animatable.View 
         style={styles.footer}
@@ -67,6 +67,11 @@ const styles = StyleSheet.create({
     title: {
         color: '#05375a',
         fontSize: 30,
+        fontWeight: 'bold'
+    },
+    main_title: {
+        color: '#fff',
+        fontSize: 45,
         fontWeight: 'bold'
     },
     text: {
