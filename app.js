@@ -93,7 +93,7 @@ app.use(`${api}/orders`, ordersRoutes);
 mongoose.connect(process.env.CONNECTION_STRING,{
     useNewUrlParser: true,
     useUnifiedTopology: true,
-    dbName: 'eshop-database'
+    //dbName: 'eshop-database'
 })
 .then(()=>{
     console.log('database connection success')
