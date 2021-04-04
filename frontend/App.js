@@ -1,11 +1,14 @@
+import 'react-native-gesture-handler';
 import React from 'react';
 import { StyleSheet, Text, View, TextInput, TouchableOpacity } from 'react-native';
-import Login from "./Pages/Login";
-import Home from "./Pages/Home";
-import { NavigationContainer } from '@react-navigation/native';
-import { createStackNavigator } from '@react-navigation/stack';
 
-const Stack = createStackNavigator();
+import { NavigationContainer } from '@react-navigation/native';
+import { createDrawerNavigator } from '@react-navigation/drawer';
+
+import MainTabScreen from "./Pages/MainTabScreen";
+const Drawer = createDrawerNavigator();
+
+
 
 export default class App extends React.Component {
   render(){
@@ -14,16 +17,18 @@ export default class App extends React.Component {
       //   <Login></Login>
       // </View>
       <NavigationContainer style = {styles.container}>
-        <Stack.Navigator initialRouteName = "Login">
-          <Stack.Screen name = "Login" component = {Login}></Stack.Screen>
-          <Stack.Screen name = "Home" component = {Home}/>
-        </Stack.Navigator>
+        <Drawer.Navigator initialRouteName="Home">
+        <Drawer.Screen name="Home" component={MainTabScreen} />
+        {/*<Drawer.Screen name="Login" component={LoginStackScreen} />*/}
+        </Drawer.Navigator>
+
       </NavigationContainer>
     );
   }
 }
 
 const styles = StyleSheet.create({
+  
   container: {
     flex: 1,
     backgroundColor: '#003f5c',
