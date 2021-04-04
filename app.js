@@ -5,8 +5,8 @@ const morgan = require('morgan');
 const mongoose = require('mongoose');
 const cors = require('cors');
 require('dotenv/config'); 
-const authJwt = require('./helper/jwt');
-const errorHandler = require('./helper/error-handler')
+//const authJwt = require('./helper/jwt');
+//const errorHandler = require('./helper/error-handler')
 
 // const Api = require('amazon-pa-api50')
 // const Config = require('amazon-pa-api50/lib/config')
@@ -27,8 +27,8 @@ app.options("*", cors());
 // Middleware
 app.use(bodyParser.json());
 app.use(morgan('tiny'));
-app.use(authJwt());
-app.use(errorHandler);
+//app.use(authJwt());
+//app.use(errorHandler);
 
 
 
@@ -71,7 +71,7 @@ async function democompare() {
   }
 }
 
-democompare();
+//democompare();
 
  
 
@@ -102,7 +102,11 @@ mongoose.connect(process.env.CONNECTION_STRING,{
     console.log(err);
 });
 
-app.listen(3000,()=>{
+let port = process.env.PORT;
+if (port == null || port == "") {
+  port = 3000;
+}
+app.listen(port,()=>{
  
-    console.log("server run on port 3000");
-})
+  console.log("server run on port 3000");
+});

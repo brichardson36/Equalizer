@@ -1,18 +1,18 @@
 const {Product} = require('../models/product');
 const express = require('express');
-const { Category } = require('../models/category');
+// const { Category } = require('../models/category');
 const router = express.Router();
 const mongoose = require('mongoose');
 
 router.get(`/`, async (req, res) =>{
 
-    let filter = {}
-    if(req.query.categories){
-        filter = {category: req.filter.categories.split(',')}
-    }
+    // let filter = {}
+    // if(req.query.categories){
+    //     filter = {category: req.filter.categories.split(',')}
+    // }
 
-    //const productList = await Product.find().select('name image -_id');
-    const productList = await Product.find(filter).populate('category');
+    const productList = await Product.find();//.select('name image -_id');
+    //const productList = await Product.find(filter).populate('category');
     if(!productList) {
         res.status(500).json({success: false})
     } 
@@ -23,7 +23,7 @@ router.get(`/:id`, async (req, res) =>{
     if(! mongoose.isValidObjectId(req.params.id)){
         res.status(400).send("Invalid Product Id");
     }
-    const product = await Product.findById(req.params.id).populate('category');
+    const product = await Product.findById(req.params.id);// .populate('category');
 
     if(!product) {
         res.status(500).json({success: false})
@@ -32,22 +32,18 @@ router.get(`/:id`, async (req, res) =>{
 })
 
 router.post(`/`, async (req, res) =>{
-    const category = await Category.findById(req.body.category);
-    if (!category) return res.status(401).send("Invalid Category")
+    //const category = await Category.findById(req.body.category);
+    //if (!category) return res.status(401).send("Invalid Category")
     
 
     let product = new Product({
-        name: req.body.name,
+        title: req.body.title,
         description: req.body.description,
-        richDescription: req.body.richDescription,
         image: req.body.image,
-        brand: req.body.brand,
         price: req.body.price,
         category: req.body.category,
-        countInStock: req.body.countInStock,
-        rating: req.body.rating,
-        numReviews: req.body.numReviews,
-        isFeatured: req.body.isFeatured,
+        fid: req.body.fid
+ 
     })
 
     product = await product.save();
@@ -64,23 +60,18 @@ router.put("/:id", async (req,res)=>{
     if(! mongoose.isValidObjectId(req.params.id)){
         res.status(400).send("Invalid Product Id");
     }
-    const category = await Category.findById(req.body.category);
-    if (!category) return res.status(401).send("Invalid Category")
+    //const category = await Category.findById(req.body.category);
+    //if (!category) return res.status(401).send("Invalid Category")
 
     const product =await Product.findByIdAndUpdate(
         req.params.id,
         {
-            name: req.body.name,
+            title: req.body.title,
             description: req.body.description,
-            richDescription: req.body.richDescription,
             image: req.body.image,
-            brand: req.body.brand,
             price: req.body.price,
             category: req.body.category,
-            countInStock: req.body.countInStock,
-            rating: req.body.rating,
-            numReviews: req.body.numReviews,
-            isFeatured: req.body.isFeatured,
+            fid: req.body.fid
         },
         {new: true}
     )
@@ -126,25 +117,25 @@ router.get(`/get/count`, async (req, res) =>{
     });
 })
 
-router.get(`/get/featured`, async (req, res) =>{
+// router.get(`/get/featured`, async (req, res) =>{
 
-    const products = await Product.find({isFeatured: true});
+//     const products = await Product.find({isFeatured: true});
 
-    if(!products) {
-        res.status(500).json({success: false})
-    } 
-    res.send(products);
-})
+//     if(!products) {
+//         res.status(500).json({success: false})
+//     } 
+//     res.send(products);
+// })
 
 
-router.get(`/get/featured/:count`, async (req, res) =>{
-    const count = req.params.count ? req.params.count : 0
-    const products = await Product.find({isFeatured: true}).limit(+count);
+// router.get(`/get/featured/:count`, async (req, res) =>{
+//     const count = req.params.count ? req.params.count : 0
+//     const products = await Product.find({isFeatured: true}).limit(+count);
 
-    if(!products) {
-        res.status(500).json({success: false})
-    } 
-    res.send(products);
-})
+//     if(!products) {
+//         res.status(500).json({success: false})
+//     } 
+//     res.send(products);
+// })
 
 module.exports =router;
