@@ -6,6 +6,8 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createDrawerNavigator } from '@react-navigation/drawer';
 
 import MainTabScreen from "./Pages/MainTabScreen";
+import {DrawerContent} from './Pages/DrawerContent';
+import SupportScreen from './Pages/SupportScreen';
 const Drawer = createDrawerNavigator();
 
 
@@ -17,9 +19,9 @@ export default class App extends React.Component {
       //   <Login></Login>
       // </View>
       <NavigationContainer style = {styles.container}>
-        <Drawer.Navigator initialRouteName="Home">
-        <Drawer.Screen name="Home" component={MainTabScreen} />
-        {/*<Drawer.Screen name="Login" component={LoginStackScreen} />*/}
+        <Drawer.Navigator initialRouteName="Home" drawerContent={props=><DrawerContent{... props}/>}>
+        <Drawer.Screen name="HomeDrawer" component={MainTabScreen} />
+        <Drawer.Screen name="SupportScreen" component={SupportScreen} />
         </Drawer.Navigator>
 
       </NavigationContainer>
