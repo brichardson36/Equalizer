@@ -9,9 +9,9 @@ import {
     TouchableRipple,
     Switch
 } from 'react-native-paper';
-import { View,StyleSheet} from 'react-native';
-
-export default function Settings() {
+import { View,StyleSheet,TouchableOpacity} from 'react-native';
+import {LinearGradient} from 'expo-linear-gradient';
+export default function Settings({navigation}) {
 
     const[limit, setLimit]= React.useState(true)
     const[silent, setSilent]= React.useState(false)
@@ -61,7 +61,7 @@ export default function Settings() {
 
 
     return(
-        <View style = {styles.container}>
+        <View >
 
             <TouchableRipple onPress={()=>{toggleSilent()}}>
                 <View style={styles.preference}>
@@ -144,7 +144,25 @@ export default function Settings() {
                     </View>
             </TouchableRipple>
 
+            <View style={styles.preference2}>
+            <LinearGradient 
+                        colors={['#08d4c4', '#01ab9d']}
+                        style={styles.signIn}
+                        >
+                            <TouchableOpacity onPress={() => navigation.goBack()}>
+                                <Text style={[styles.textSign,{
+                                    color:'#fff'
+                                }
+                                ]}>
+                                    Save
+                                </Text>
+                            </TouchableOpacity>
+            </LinearGradient>
+            </View>
         </View>
+        
+
+        
     )
 }
 
@@ -192,10 +210,29 @@ const styles = StyleSheet.create({
         borderTopColor: '#f4f4f4',
         borderTopWidth: 1
     },
+    signIn: {
+        width: '50%',
+        height: 50,
+        justifyContent: 'center',
+        alignItems: 'center',
+        borderRadius: 10
+    },
+    textSign: {
+        fontSize: 18,
+        fontWeight: 'bold'
+    },
     preference: {
       flexDirection: 'row',
       justifyContent: 'space-between',
       paddingVertical: 12,
       paddingHorizontal: 16,
     },
+    preference2: {
+        flexDirection: 'row',
+        justifyContent: 'flex-end',
+        alignItems: 'flex-end',
+        paddingVertical: 12,
+        paddingHorizontal: 16,
+      },
+      
   });

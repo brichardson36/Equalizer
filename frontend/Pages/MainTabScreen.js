@@ -64,7 +64,7 @@ const MainTabScreen=()=>(
         tabBarLabel: 'Explore',
         tabBarColor:'#d02860',
         tabBarIcon: ({ color }) => (
-          <Icon name="ios-aperture" color={color} size={26} />
+          <Icon name="search" color={color} size={26} />
         ),
       }}
     />
@@ -159,9 +159,9 @@ const HomeStackScreen=({navigation})=>(
       },
     }}
     >
-      <UpdateStack.Screen name = "Update" component = {Update} options = {{
+      <UpdateStack.Screen name = "Updates" component = {Update} options = {{
         headerLeft:()=>(
-          <Icon.Button name = "ios-notifications" size = {25}
+          <Icon.Button name = "ios-menu" size = {25}
           backgroundColor = "#1f65ff"
           onPress={()=>navigation.openDrawer()}>
           </Icon.Button>
@@ -184,7 +184,7 @@ const HomeStackScreen=({navigation})=>(
     >
       <ExploreStack.Screen name = "Explore" component = {ExploreScreen} options = {{
         headerLeft:()=>(
-          <Icon.Button name = "ios-aperture" size = {25}
+          <Icon.Button name = "ios-menu" size = {25}
           backgroundColor = "#d02860"
           onPress={()=> navigation.openDrawer()}>
           </Icon.Button>
