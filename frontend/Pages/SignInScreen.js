@@ -7,9 +7,9 @@ import Feather from 'react-native-vector-icons/Feather';
 import {LinearGradient} from 'expo-linear-gradient';
 
 import {AuthContext} from '../AppScreen';
-
+import {useTheme} from 'react-native-paper';
 const SignInScreen = ({navigation}) => {
-    
+    const{colors}=useTheme();
     const [username, setUsername] = React.useState('ryfis');
     const [password, setPassword] = React.useState('ryfis2');
     const { signIn } = React.useContext(AuthContext);
@@ -66,19 +66,25 @@ const SignInScreen = ({navigation}) => {
             <Text style={styles.text_header}>Welcome</Text>
         </View>
         <Animatable.View 
-        style={styles.footer}
+        style={[styles.footer,{
+            backgroundColor:colors.background
+        }]}
         animation="fadeInUpBig"
         >
-            <Text style={styles.text_footer}>Email</Text>
+            <Text style={[styles.text_footer,{
+                color:colors.text
+            }]}>Email</Text>
             <View style={styles.action}>
                 <FontAwesome
                     name="user-o"
-                    color="#05375a"
+                    color={colors.text}
                     size={20}
                 />
                 <TextInput
                     placeholder="Your Email"
-                    style={styles.textInput}
+                    style={[styles.textInput,{
+                        color:colors.text
+                    }]}
                     autoCapitalize="none"
                     onChangeText={(val)=>textInputChange(val)}I
                 />
@@ -96,19 +102,22 @@ const SignInScreen = ({navigation}) => {
                 :null}
             </View>
             <Text style={[styles.text_footer,{
+                color:colors.text,
                 marginTop:35
             }]}>Password</Text>
             
             <View style={styles.action}>
                 <Feather
                     name="lock"
-                    color="#05375a"
+                    color={colors.text}
                     size={20}
                 />
                 <TextInput
                     placeholder="Your Password"
                     secureTextEntry={data.secureTextEntry?true:false}
-                    style={styles.textInput}
+                    style={[styles.textInput,{
+                        color:colors.text
+                    }]}
                     autoCapitalize="none"
                     onChangeText={(val)=>handlePasswordChange(val)}I
                 />

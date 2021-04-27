@@ -10,9 +10,10 @@ import {
     TouchableRipple,
     Switch
 } from 'react-native-paper';
-
+import {useTheme} from '@react-navigation/native';
+import {StatusBar} from 'react-native';
 export default function Home() {
-
+    const{colors}=useTheme();
     useEffect(()=> {
         getContent();
     }, [])
@@ -33,23 +34,25 @@ export default function Home() {
     const toggleTrackTwo=()=>{
         setTrackTwo(!trackTwo);
     }
-
+    const theme=useTheme();
     return(
         <View style = {{flex: 1, flexDirection: "column"}}>
+            {/*<StatusBar barStyle={theme.dark? "light-content":"dark-content"}/>*/}
+            <StatusBar barStyle="light-content"/>
             <View style = {{flex: 1, flexDirection: "row", paddingTop:30}}>
                 <View>
                     <Image source={{ uri: imgContent }} style={{ width: 150, height: 150 }} />
                 </View>
                 <View style = {{ flex: 1, flexDirection: "column"}}>
                     <View style = {{ flex: 1, paddingLeft: 15 }}>
-                        <Text>{description}</Text>
+                        <Text style={{color: colors.text}}>{description}</Text>
                     </View>
                 </View>
             </View>
             <View style = {{flex: 1, marginTop: 20}}>
             <TouchableRipple onPress={()=>{toggleTrack()}}>
                 <View style={styles.preference}>
-                    <Text>${price} - Track?</Text>
+                    <Text style={{color: colors.text}}>${price} - Track?</Text>
                     <View pointerEvents="none">
                         <Switch value={track}/>
                     </View>
@@ -64,14 +67,14 @@ export default function Home() {
                 </View>
                 <View style = {{ flex: 1, flexDirection: "column"}}>
                     <View style = {{ flex: 1, paddingLeft: 15 }}>
-                        <Text>{descriptionTwo}</Text>
+                        <Text style={{color: colors.text}}>{descriptionTwo}</Text>
                     </View>
                 </View>
             </View>
             <View style = {{flex: 1, marginTop: 50}}>
             <TouchableRipple onPress={()=>{toggleTrackTwo()}}>
                 <View style={styles.preference}>
-                    <Text>${priceTwo} - Track?</Text>
+                    <Text style={{color: colors.text}}>${priceTwo} - Track?</Text>
                     <View pointerEvents="none">
                         <Switch value={trackTwo}/>
                     </View>
