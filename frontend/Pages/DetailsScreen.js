@@ -3,7 +3,7 @@ import { StyleSheet, Image, Text, View, TextInput, TouchableOpacity,  ScrollView
 import { AuthContext } from '../AppScreen';
 import { Searchbar } from 'react-native-paper';
 import { Card, Button } from 'react-native-elements';
-
+import {LinearGradient} from 'expo-linear-gradient';
 import {
     Avatar,
     Title,
@@ -15,7 +15,7 @@ import {
 } from 'react-native-paper';
 import {useTheme} from '@react-navigation/native';
 import {StatusBar} from 'react-native';
-export default function Home({navigation}) {
+export default function DetailsScreen({navigation}) {
     const{colors}=useTheme();
     useEffect(()=> {
         getContent();
@@ -47,32 +47,9 @@ export default function Home({navigation}) {
         <View style = {{flex: 1, flexDirection: "column"}}>
             {/*<StatusBar barStyle={theme.dark? "light-content":"dark-content"}/>*/}
             <StatusBar barStyle="light-content"/>
-            <Searchbar
-                placeholder="Search"
-                onChangeText={onChangeSearch}
-                value={searchQuery}
-            />
+            
 
 
-        <View style = {{flex: 0, paddingTop:20,paddingBottom:5}}>
-            <View style = { styles.scrollViewHolder }>
-                <ScrollView horizontal = { true } showsHorizontalScrollIndicator = { false }>
-                    <Text style = { styles.item }>Electronics</Text>
-                    <View style = { styles.separator }/>
-                    <Text style = { styles.item }>Software</Text>
-                    <View style = { styles.separator }/>
-                    <Text style = { styles.item }>Clothes</Text>
-                    <View style = { styles.separator }/>
-                    <Text style = { styles.item }>Automotive</Text>
-                    <View style = { styles.separator }/>
-                    <Text style = { styles.item }>Toys and Games</Text>
-                    <View style = { styles.separator }/>
-                    <Text style = { styles.item }>Tools</Text>
-                    <View style = { styles.separator }/>
-                    <Text style = { styles.item }>Household</Text>
-                </ScrollView>
-            </View>             
-        </View>
         
 
         <ScrollView
@@ -90,7 +67,7 @@ export default function Home({navigation}) {
                             BackPack
                         </Text>
                         <Image
-                        style={{ width: "100%", height: 150 }}
+                        style={{ width: "100%", height: 250 }}
                         resizeMode="cover"
                         source={{ uri: imgContent }}
                         />
@@ -104,49 +81,20 @@ export default function Home({navigation}) {
                                     added 2h ago
                                  </Text>
                             </View>
-                            {/*<View  style = {{flex: 1, marginLeft: 50}}>
-                            <TouchableRipple  onPress={()=>{toggleTrack()}}>
-                                <View style={styles.preference}>
-                                    <Text style={{color: colors.text}}>Track?</Text>
-                                    <View pointerEvents="none">
-                                        <Switch value={track}/>
-                                    </View>
-                                    </View>
-                            </TouchableRipple>
-                            </View>*/}
-                        </View>
-                        <Button
-                        type="clear"
-                        title='Details'
-                        //onPress={() => this.props.navigation.navigate('Details')} 
-                        onPress={()=>navigation.navigate('DetailsScreen')}
-                        />
-                        
-                    </Card>
-                </View>
-                <View style = {{flex: 1}}>
-                    <Card >
-                
-                        <Text style={{marginBottom: 10, marginTop: 10 }} h2>
-                            BackPack
-                        </Text>
-                        <Image
-                        style={{ width: "100%", height: 150 }}
-                        resizeMode="cover"
-                        source={{ uri: imgContentTwo }}
-                        />
-                        <View style = {{flex: 1, flexDirection: 'row', justifyContent: 'space-between' }}>
-                            <View style = {{flex: 1}}>
-                                <Text style={styles.price} h4>
-                                    $ {priceTwo}
-                                </Text>
+                            <View  style = {{flex: 1, marginLeft: 50}}>
                             
-                                <Text h6 style={styles.description}>
-                                    added 2h ago
-                                 </Text>
                             </View>
-                            {/*<View  style = {{flex: 1, marginLeft: 50}}>
-                            <TouchableRipple  onPress={()=>{toggleTrack()}}>
+                        </View>
+                        
+                        
+                    </Card>
+                    <Card>
+                    <View style = {{ flex: 1, paddingLeft: 15 }}>
+                            <Paragraph style={{color: colors.text}}>{description}</Paragraph>
+                        </View>
+                    </Card>
+                    <Card>
+                    <TouchableRipple  onPress={()=>{toggleTrack()}}>
                                 <View style={styles.preference}>
                                     <Text style={{color: colors.text}}>Track?</Text>
                                     <View pointerEvents="none">
@@ -154,105 +102,35 @@ export default function Home({navigation}) {
                                     </View>
                                     </View>
                             </TouchableRipple>
-                            </View>*/}
-                        </View>
-                        <Button
-                        type="clear"
-                        title='Details'
-                        //onPress={() => this.props.navigation.navigate('Details')} 
-                        onPress={()=>navigation.navigate('DetailsScreen')}
-                        />
-                        
                     </Card>
+                    <View style={{flexDirection: 'row',
+                    justifyContent: 'flex-end',
+                    alignItems: 'flex-end',
+                    
+                     marginTop: 20,
+                    paddingVertical: 12,
+                    paddingHorizontal: 16}}>
+                    <LinearGradient 
+                                colors={['#08d4c4', '#01ab9d']}
+                                style={styles.signIn}
+                                >
+                                    <TouchableOpacity onPress={() => navigation.goBack()}>
+                                        <Text style={[styles.textSign,{
+                                            color:'#fff'
+                                        }
+                                        ]}>
+                                            Back
+                                        </Text>
+                                    </TouchableOpacity>
+                    </LinearGradient>
+                    </View>
                 </View>
+                
             </View>
 
 
-            <View style={styles.row1}>
             
-                <View style = {{flex: 1}}>
-                    <Card >
-                
-                        <Text style={{marginBottom: 10, marginTop: 10 }} h2>
-                            BackPack
-                        </Text>
-                        <Image
-                        style={{ width: "100%", height: 150 }}
-                        resizeMode="cover"
-                        source={{ uri: imgContent }}
-                        />
-                        <View style = {{flex: 1, flexDirection: 'row', justifyContent: 'space-between' }}>
-                            <View style = {{flex: 1}}>
-                                <Text style={styles.price} h4>
-                                    $ {price}
-                                </Text>
-                            
-                                <Text h6 style={styles.description}>
-                                    added 2h ago
-                                 </Text>
-                            </View>
-                            {/*<View  style = {{flex: 1, marginLeft: 50}}>
-                            <TouchableRipple  onPress={()=>{toggleTrack()}}>
-                                <View style={styles.preference}>
-                                    <Text style={{color: colors.text}}>Track?</Text>
-                                    <View pointerEvents="none">
-                                        <Switch value={track}/>
-                                    </View>
-                                    </View>
-                            </TouchableRipple>
-                            </View>*/}
-                        </View>
-                        <Button
-                        type="clear"
-                        title='Details'
-                        //onPress={() => this.props.navigation.navigate('Details')} 
-                        onPress={()=>navigation.navigate('DetailsScreen')}
-                        />
-                        
-                    </Card>
-                </View>
-                <View style = {{flex: 1}}>
-                    <Card >
-                
-                        <Text style={{marginBottom: 10, marginTop: 10 }} h2>
-                            BackPack
-                        </Text>
-                        <Image
-                        style={{ width: "100%", height: 150 }}
-                        resizeMode="cover"
-                        source={{ uri: imgContentTwo }}
-                        />
-                        <View style = {{flex: 1, flexDirection: 'row', justifyContent: 'space-between' }}>
-                            <View style = {{flex: 1}}>
-                                <Text style={styles.price} h4>
-                                    $ {priceTwo}
-                                </Text>
-                            
-                                <Text h6 style={styles.description}>
-                                    added 2h ago
-                                 </Text>
-                            </View>
-                            {/*<View  style = {{flex: 1, marginLeft: 50}}>
-                            <TouchableRipple  onPress={()=>{toggleTrack()}}>
-                                <View style={styles.preference}>
-                                    <Text style={{color: colors.text}}>Track?</Text>
-                                    <View pointerEvents="none">
-                                        <Switch value={track}/>
-                                    </View>
-                                    </View>
-                            </TouchableRipple>
-                            </View>*/}
-                        </View>
-                        <Button
-                        type="clear"
-                        title='Details'
-                        //onPress={() => this.props.navigation.navigate('Details')} 
-                        onPress={()=>navigation.navigate('DetailsScreen')}
-                        />
-                        
-                    </Card>
-                </View>
-            </View>
+     
         </ScrollView>
             
             {/*<View style = {{flex: 1, flexDirection: "row", paddingTop:30}}>
@@ -426,4 +304,17 @@ const styles = StyleSheet.create({
     col1: {
         flex: 1,
     },
+    preference2: {
+        flexDirection: 'row',
+        justifyContent: 'flex-end',
+        alignItems: 'flex-end',
+        paddingVertical: 12,
+        paddingHorizontal: 16,
+      },
+      textSign: {
+        fontSize: 18,
+        fontWeight: 'bold',
+        padding:10,
+    }
   });
+

@@ -14,6 +14,7 @@ import {Provider as PaperProvider,
 import MainTabScreen from "./Pages/MainTabScreen";
 import {DrawerContent} from './Pages/DrawerContent';
 import SupportScreen from './Pages/SupportScreen';
+import DetailsScreen from './Pages/DetailsScreen';
 import RootStackScreen from './Pages/RootStackScreen';
 import SettingsScreen from './Pages/SettingsScreen';
 const Drawer = createDrawerNavigator();
@@ -136,6 +137,8 @@ export default function AppScreen() {
                     <Drawer.Screen name="HomeDrawer" component={MainTabScreen} />
                     <Drawer.Screen name="SupportScreen" component={SupportScreen} />
                     <Drawer.Screen name="Settings" component={SettingsScreen} />
+                    <Drawer.Screen name="DetailsScreen" component={DetailsScreen} />
+                    
                 </Drawer.Navigator>
                 }
             </NavigationContainer>
