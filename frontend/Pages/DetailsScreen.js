@@ -95,7 +95,7 @@ export default function DetailsScreen({navigation}) {
                     <Card>
                     <TouchableRipple  onPress={()=>{toggleTrack()}}>
                                 <View style={styles.preference2}>
-                                    <Text style={styles.price2}>Track?   </Text>
+                                    <Text style={styles.price2}>Track   </Text>
                                     <View pointerEvents="none">
                                         <Switch value={track}/>
                                     </View>
