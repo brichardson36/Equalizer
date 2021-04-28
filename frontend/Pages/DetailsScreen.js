@@ -1,8 +1,8 @@
 import React, {useEffect} from 'react';
 import { StyleSheet, Image, Text, View, TextInput, TouchableOpacity,  ScrollView} from 'react-native';
 import { AuthContext } from '../AppScreen';
-import { Searchbar } from 'react-native-paper';
-import { Card, Button } from 'react-native-elements';
+import { Searchbar,Card } from 'react-native-paper';
+import { Button } from 'react-native-elements';
 import {LinearGradient} from 'expo-linear-gradient';
 import {
     Avatar,
@@ -62,30 +62,29 @@ export default function DetailsScreen({navigation}) {
             
                 <View style = {{flex: 1}}>
                     <Card >
-                
-                        <Text style={{marginBottom: 10, marginTop: 10 }} h2>
-                            BackPack
-                        </Text>
+                    <Card.Title title="Backpack" subtitle="added 2h ago"  />
+                        
+                        <View style={{padding:10}}>
+                        
+                        <View style={{ justifyContent: 'center', alignItems:'center'}}>
                         <Image
-                        style={{ width: "100%", height: 250 }}
+                        style={{ width: "95%", height: 250}}
                         resizeMode="cover"
                         source={{ uri: imgContent }}
-                        />
+                        /></View>
                         <View style = {{flex: 1, flexDirection: 'row', justifyContent: 'space-between' }}>
                             <View style = {{flex: 1}}>
-                                <Text style={styles.price} h4>
+                                <Text style={styles.price2 } h4>
                                     $ {price}
                                 </Text>
                             
-                                <Text h6 style={styles.description}>
-                                    added 2h ago
-                                 </Text>
+                                
                             </View>
                             <View  style = {{flex: 1, marginLeft: 50}}>
                             
                             </View>
                         </View>
-                        
+                        </View>
                         
                     </Card>
                     <Card>
@@ -95,8 +94,8 @@ export default function DetailsScreen({navigation}) {
                     </Card>
                     <Card>
                     <TouchableRipple  onPress={()=>{toggleTrack()}}>
-                                <View style={styles.preference}>
-                                    <Text style={{color: colors.text}}>Track?</Text>
+                                <View style={styles.preference2}>
+                                    <Text style={styles.price2}>Track?   </Text>
                                     <View pointerEvents="none">
                                         <Switch value={track}/>
                                     </View>
@@ -315,6 +314,13 @@ const styles = StyleSheet.create({
         fontSize: 18,
         fontWeight: 'bold',
         padding:10,
-    }
+    },
+    price2: {
+        fontSize: 18,
+        fontWeight: 'bold',
+        marginBottom: 2,
+        marginTop: 10,
+        color: '#5a647d',
+    },
   });
 
