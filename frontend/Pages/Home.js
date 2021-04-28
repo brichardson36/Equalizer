@@ -1,8 +1,8 @@
 import React, {useEffect} from 'react';
 import { StyleSheet, Image, Text, View, TextInput, TouchableOpacity,  ScrollView} from 'react-native';
 import { AuthContext } from '../AppScreen';
-import { Searchbar } from 'react-native-paper';
-import { Card, Button } from 'react-native-elements';
+import { Searchbar ,Card } from 'react-native-paper';
+import { Button } from 'react-native-elements';
 
 import {
     Avatar,
@@ -83,10 +83,10 @@ export default function Home({navigation}) {
         }}>
             <View style={styles.row1}>
             
-                <View style = {{flex: 1}}>
+                <View style = {{flex: 1,padding:5,margin:5}}>
                     <Card >
-                
-                        <Text style={{marginBottom: 10, marginTop: 10 }} h2>
+                    <View style={{padding:5}}>
+                        <Text style={{marginBottom: 10, marginTop: 10, color: colors.text }} h2>
                             BackPack
                         </Text>
                         <Image
@@ -121,13 +121,13 @@ export default function Home({navigation}) {
                         //onPress={() => this.props.navigation.navigate('Details')} 
                         onPress={()=>navigation.navigate('DetailsScreen')}
                         />
-                        
+                        </View>
                     </Card>
                 </View>
-                <View style = {{flex: 1}}>
+                <View style = {{flex: 1,padding:5,margin:5}}>
                     <Card >
-                
-                        <Text style={{marginBottom: 10, marginTop: 10 }} h2>
+                    <View style={{padding:5}}>
+                        <Text style={{marginBottom: 10, marginTop: 10, color: colors.text }} h2>
                             BackPack
                         </Text>
                         <Image
@@ -162,7 +162,7 @@ export default function Home({navigation}) {
                         //onPress={() => this.props.navigation.navigate('Details')} 
                         onPress={()=>navigation.navigate('DetailsScreen')}
                         />
-                        
+                        </View>
                     </Card>
                 </View>
             </View>
@@ -170,10 +170,10 @@ export default function Home({navigation}) {
 
             <View style={styles.row1}>
             
-                <View style = {{flex: 1}}>
+                <View style = {{flex: 1,padding:5,margin:5}}>
                     <Card >
-                
-                        <Text style={{marginBottom: 10, marginTop: 10 }} h2>
+                        <View style={{padding:5}}>
+                        <Text style={{marginBottom: 10, marginTop: 10, color: colors.text }} h2>
                             BackPack
                         </Text>
                         <Image
@@ -208,13 +208,13 @@ export default function Home({navigation}) {
                         //onPress={() => this.props.navigation.navigate('Details')} 
                         onPress={()=>navigation.navigate('DetailsScreen')}
                         />
-                        
+                        </View>
                     </Card>
                 </View>
-                <View style = {{flex: 1}}>
+                <View style = {{flex: 1,padding:5,margin:5}}>
                     <Card >
-                
-                        <Text style={{marginBottom: 10, marginTop: 10 }} h2>
+                        <View style={{padding:5}}>
+                        <Text style={{marginBottom: 10, marginTop: 10, color: colors.text }} h2>
                             BackPack
                         </Text>
                         <Image
@@ -249,7 +249,7 @@ export default function Home({navigation}) {
                         //onPress={() => this.props.navigation.navigate('Details')} 
                         onPress={()=>navigation.navigate('DetailsScreen')}
                         />
-                        
+                        </View>
                     </Card>
                 </View>
             </View>
