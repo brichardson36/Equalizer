@@ -64,7 +64,7 @@ const MainTabScreen=()=>(
         tabBarLabel: 'Explore',
         tabBarColor:'#d02860',
         tabBarIcon: ({ color }) => (
-          <Icon name="search" color={color} size={26} />
+          <Icon name="ios-aperture" color={color} size={26} />
         ),
       }}
     />

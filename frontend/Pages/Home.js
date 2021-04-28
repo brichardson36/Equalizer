@@ -1,6 +1,8 @@
 import React, {useEffect} from 'react';
-import { StyleSheet, Image, Text, View, TextInput, TouchableOpacity } from 'react-native';
+import { StyleSheet, Image, Text, View, TextInput, TouchableOpacity,  ScrollView} from 'react-native';
 import { AuthContext } from '../AppScreen';
+import { Searchbar } from 'react-native-paper';
+
 import {
     Avatar,
     Title,
@@ -35,8 +37,38 @@ export default function Home() {
         setTrackTwo(!trackTwo);
     }
     const theme=useTheme();
+
+    const [searchQuery, setSearchQuery] = React.useState('');
+
+    const onChangeSearch = query => setSearchQuery(query);
     return(
+        
         <View style = {{flex: 1, flexDirection: "column"}}>
+            
+            <Searchbar
+                placeholder="Search"
+                onChangeText={onChangeSearch}
+                value={searchQuery}
+            />
+        <View style = { styles.container2 }>
+            <View style = { styles.scrollViewHolder }>
+                <ScrollView horizontal = { true } showsHorizontalScrollIndicator = { false }>
+                    <Text style = { styles.item }>Electronics</Text>
+                    <View style = { styles.separator }/>
+                    <Text style = { styles.item }>Software</Text>
+                    <View style = { styles.separator }/>
+                    <Text style = { styles.item }>Clothes</Text>
+                    <View style = { styles.separator }/>
+                    <Text style = { styles.item }>Automotive</Text>
+                    <View style = { styles.separator }/>
+                    <Text style = { styles.item }>Toys and Games</Text>
+                    <View style = { styles.separator }/>
+                    <Text style = { styles.item }>Tools</Text>
+                    <View style = { styles.separator }/>
+                    <Text style = { styles.item }>Household</Text>
+                </ScrollView>
+            </View>             
+        </View>
             {/*<StatusBar barStyle={theme.dark? "light-content":"dark-content"}/>*/}
             <StatusBar barStyle="light-content"/>
             <View style = {{flex: 1, flexDirection: "row", paddingTop:30}}>
@@ -163,4 +195,29 @@ const styles = StyleSheet.create({
       paddingVertical: 12,
       paddingHorizontal: 16,
     },
+    scrollViewHolder:
+   {
+      
+   },
+
+   item:
+   {
+      padding: 10,
+      color: '#ffffff',
+      fontSize: 18,
+      margin: 1,
+      borderColor: '#ffffff',
+      borderWidth: 1,
+      backgroundColor: '#009387'
+   },
+
+   separator:
+   {
+      width: 1, 
+   },
+   container2:
+   {
+      flex: 0.6,
+      justifyContent: 'center'
+   },
   });
