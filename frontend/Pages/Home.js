@@ -2,6 +2,7 @@ import React, {useEffect} from 'react';
 import { StyleSheet, Image, Text, View, TextInput, TouchableOpacity,  ScrollView} from 'react-native';
 import { AuthContext } from '../AppScreen';
 import { Searchbar } from 'react-native-paper';
+import { Card, Button } from 'react-native-elements';
 
 import {
     Avatar,
@@ -44,13 +45,16 @@ export default function Home() {
     return(
         
         <View style = {{flex: 1, flexDirection: "column"}}>
-            
+            {/*<StatusBar barStyle={theme.dark? "light-content":"dark-content"}/>*/}
+            <StatusBar barStyle="light-content"/>
             <Searchbar
                 placeholder="Search"
                 onChangeText={onChangeSearch}
                 value={searchQuery}
             />
-        <View style = { styles.container2 }>
+
+
+        <View style = {{flex: 0, paddingTop:20}}>
             <View style = { styles.scrollViewHolder }>
                 <ScrollView horizontal = { true } showsHorizontalScrollIndicator = { false }>
                     <Text style = { styles.item }>Electronics</Text>
@@ -69,9 +73,179 @@ export default function Home() {
                 </ScrollView>
             </View>             
         </View>
-            {/*<StatusBar barStyle={theme.dark? "light-content":"dark-content"}/>*/}
-            <StatusBar barStyle="light-content"/>
-            <View style = {{flex: 1, flexDirection: "row", paddingTop:30}}>
+        
+
+        <ScrollView
+          style={{
+            flexGrow: 0,
+            width: "100%",
+            height: "100%",
+        }}>
+            <View style={styles.row1}>
+            
+                <View style = {{flex: 1}}>
+                    <Card >
+                
+                        <Text style={{marginBottom: 10, marginTop: 10 }} h2>
+                            BackPack
+                        </Text>
+                        <Image
+                        style={{ width: "100%", height: 150 }}
+                        resizeMode="cover"
+                        source={{ uri: imgContent }}
+                        />
+                        <View style = {{flex: 1, flexDirection: 'row', justifyContent: 'space-between' }}>
+                            <View style = {{flex: 1}}>
+                                <Text style={styles.price} h4>
+                                    $ {price}
+                                </Text>
+                            
+                                <Text h6 style={styles.description}>
+                                    added 2h ago
+                                 </Text>
+                            </View>
+                            {/*<View  style = {{flex: 1, marginLeft: 50}}>
+                            <TouchableRipple  onPress={()=>{toggleTrack()}}>
+                                <View style={styles.preference}>
+                                    <Text style={{color: colors.text}}>Track?</Text>
+                                    <View pointerEvents="none">
+                                        <Switch value={track}/>
+                                    </View>
+                                    </View>
+                            </TouchableRipple>
+                            </View>*/}
+                        </View>
+                        <Button
+                        type="clear"
+                        title='Details'
+                        onPress={() => this.props.navigation.navigate('Details')} />
+                        
+                    </Card>
+                </View>
+                <View style = {{flex: 1}}>
+                    <Card >
+                
+                        <Text style={{marginBottom: 10, marginTop: 10 }} h2>
+                            BackPack
+                        </Text>
+                        <Image
+                        style={{ width: "100%", height: 150 }}
+                        resizeMode="cover"
+                        source={{ uri: imgContentTwo }}
+                        />
+                        <View style = {{flex: 1, flexDirection: 'row', justifyContent: 'space-between' }}>
+                            <View style = {{flex: 1}}>
+                                <Text style={styles.price} h4>
+                                    $ {priceTwo}
+                                </Text>
+                            
+                                <Text h6 style={styles.description}>
+                                    added 2h ago
+                                 </Text>
+                            </View>
+                            {/*<View  style = {{flex: 1, marginLeft: 50}}>
+                            <TouchableRipple  onPress={()=>{toggleTrack()}}>
+                                <View style={styles.preference}>
+                                    <Text style={{color: colors.text}}>Track?</Text>
+                                    <View pointerEvents="none">
+                                        <Switch value={track}/>
+                                    </View>
+                                    </View>
+                            </TouchableRipple>
+                            </View>*/}
+                        </View>
+                        <Button
+                        type="clear"
+                        title='Details'
+                        onPress={() => this.props.navigation.navigate('Details')} />
+                        
+                    </Card>
+                </View>
+            </View>
+            <View style={styles.row1}>
+            
+                <View style = {{flex: 1}}>
+                    <Card >
+                
+                        <Text style={{marginBottom: 10, marginTop: 10 }} h2>
+                            BackPack
+                        </Text>
+                        <Image
+                        style={{ width: "100%", height: 150 }}
+                        resizeMode="cover"
+                        source={{ uri: imgContent }}
+                        />
+                        <View style = {{flex: 1, flexDirection: 'row', justifyContent: 'space-between' }}>
+                            <View style = {{flex: 1}}>
+                                <Text style={styles.price} h4>
+                                    $ {price}
+                                </Text>
+                            
+                                <Text h6 style={styles.description}>
+                                    added 2h ago
+                                 </Text>
+                            </View>
+                            {/*<View  style = {{flex: 1, marginLeft: 50}}>
+                            <TouchableRipple  onPress={()=>{toggleTrack()}}>
+                                <View style={styles.preference}>
+                                    <Text style={{color: colors.text}}>Track?</Text>
+                                    <View pointerEvents="none">
+                                        <Switch value={track}/>
+                                    </View>
+                                    </View>
+                            </TouchableRipple>
+                            </View>*/}
+                        </View>
+                        <Button
+                        type="clear"
+                        title='Details'
+                        onPress={() => this.props.navigation.navigate('Details')} />
+                        
+                    </Card>
+                </View>
+                <View style = {{flex: 1}}>
+                    <Card >
+                
+                        <Text style={{marginBottom: 10, marginTop: 10 }} h2>
+                            BackPack
+                        </Text>
+                        <Image
+                        style={{ width: "100%", height: 150 }}
+                        resizeMode="cover"
+                        source={{ uri: imgContentTwo }}
+                        />
+                        <View style = {{flex: 1, flexDirection: 'row', justifyContent: 'space-between' }}>
+                            <View style = {{flex: 1}}>
+                                <Text style={styles.price} h4>
+                                    $ {priceTwo}
+                                </Text>
+                            
+                                <Text h6 style={styles.description}>
+                                    added 2h ago
+                                 </Text>
+                            </View>
+                            {/*<View  style = {{flex: 1, marginLeft: 50}}>
+                            <TouchableRipple  onPress={()=>{toggleTrack()}}>
+                                <View style={styles.preference}>
+                                    <Text style={{color: colors.text}}>Track?</Text>
+                                    <View pointerEvents="none">
+                                        <Switch value={track}/>
+                                    </View>
+                                    </View>
+                            </TouchableRipple>
+                            </View>*/}
+                        </View>
+                        <Button
+                        type="clear"
+                        title='Details'
+                        onPress={() => this.props.navigation.navigate('Details')} />
+                        
+                    </Card>
+                </View>
+            </View>
+        </ScrollView>
+            
+            {/*<View style = {{flex: 1, flexDirection: "row", paddingTop:30}}>
                 <View>
                     <Image source={{ uri: imgContent }} style={{ width: 150, height: 150 }} />
                 </View>
@@ -112,9 +286,7 @@ export default function Home() {
                     </View>
                     </View>
             </TouchableRipple>
-            </View>
-
-
+        </View>*/}
 
         </View>
     )
@@ -220,4 +392,28 @@ const styles = StyleSheet.create({
       flex: 0.6,
       justifyContent: 'center'
    },
+
+   name: {
+    color: '#5a647d',
+    fontWeight: 'bold',
+    fontSize: 30
+    },
+    price: {
+        fontWeight: 'bold',
+        marginBottom: 10,
+        marginTop: 10,
+        color: '#5a647d',
+    },
+    description: {
+        fontSize: 10,
+        color: '#c1c4cd'
+    },
+    row1: {
+        flex: 1,
+        flexDirection: 'row',
+        justifyContent: 'center',
+    },
+    col1: {
+        flex: 1,
+    },
   });
