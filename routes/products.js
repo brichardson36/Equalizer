@@ -31,6 +31,27 @@ router.get(`/:id`, async (req, res) =>{
     res.send(product);
 })
 
+router.get(`/get/subscribed_user`, async (req, res) =>{
+    const productList = await Product.find().select("subscribed_user");//.select('name image -_id');
+    //const productList = await Product.find(filter).populate('category');
+    if(!productList) {
+        res.status(500).json({success: false})
+    } 
+    res.send(productList);
+})
+
+router.get(`/subscribed_user/:id`, async (req, res) =>{
+    if(! mongoose.isValidObjectId(req.params.id)){
+        res.status(400).send("Invalid Product Id");
+    }
+    const product = await Product.findById(req.params.id).select("subscribed_user");// .populate('category');
+
+    if(!product) {
+        res.status(500).json({success: false})
+    } 
+    res.send(product);
+})
+
 router.post(`/`, async (req, res) =>{
     //const category = await Category.findById(req.body.category);
     //if (!category) return res.status(401).send("Invalid Category")
@@ -42,7 +63,7 @@ router.post(`/`, async (req, res) =>{
         image: req.body.image,
         price: req.body.price,
         category: req.body.category,
-        fid: req.body.fid
+        fid: req.body.fid,
  
     })
 
@@ -71,7 +92,84 @@ router.put("/:id", async (req,res)=>{
             image: req.body.image,
             price: req.body.price,
             category: req.body.category,
-            fid: req.body.fid
+            fid: req.body.fid,
+            //subscribed_user: req.body.subscribed_user,
+            //in_stock: req.body.in_stock
+        },
+        {new: true}
+    )
+
+    if(!product){
+        return res.status(404).send('the product cannot be updated!');
+    }
+
+    res.send(product);
+
+})
+
+router.put("/restock/:id", async (req,res)=>{
+    if(! mongoose.isValidObjectId(req.params.id)){
+        res.status(400).send("Invalid Product Id");
+    }
+    //const category = await Category.findById(req.body.category);
+    //if (!category) return res.status(401).send("Invalid Category")
+
+    const product =await Product.findByIdAndUpdate(
+        req.params.id,
+        {
+            in_stock: true
+        },
+        {new: true}
+    ).find( ).select('subscribed_user -_id')
+
+    if(!product){
+        return res.status(404).send('the product cannot be restocked!');
+    }
+    console.log(product)
+
+
+    res.send(product);
+
+})
+
+router.put("/remove/subscribed_user/:id", async (req,res)=>{
+    if(! mongoose.isValidObjectId(req.params.id)){
+        res.status(400).send("Invalid Product Id");
+    }
+    //const category = await Category.findById(req.body.category);
+    //if (!category) return res.status(401).send("Invalid Category")
+
+    const product =await Product.findByIdAndUpdate(
+        req.params.id,
+        
+        {
+            $pull: { subscribed_user: req.body.subscribed_user }
+             
+        },
+        {new: true}
+    )
+
+    if(!product){
+        return res.status(404).send('the product cannot be updated!');
+    }
+
+    res.send(product);
+
+})
+
+router.put("/append/subscribed_user/:id", async (req,res)=>{
+    if(! mongoose.isValidObjectId(req.params.id)){
+        res.status(400).send("Invalid Product Id");
+    }
+    //const category = await Category.findById(req.body.category);
+    //if (!category) return res.status(401).send("Invalid Category")
+
+    const product =await Product.findByIdAndUpdate(
+        req.params.id,
+        
+        {
+            $push: { subscribed_user: req.body.subscribed_user }
+             
         },
         {new: true}
     )
