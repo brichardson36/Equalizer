@@ -9,10 +9,14 @@ import {
     TouchableRipple,
     Switch
 } from 'react-native-paper';
-import { View,StyleSheet,TouchableOpacity} from 'react-native';
-import {LinearGradient} from 'expo-linear-gradient';
-export default function Settings({navigation}) {
+import { useState } from "react";
+import { View,StyleSheet,TouchableOpacity,  ScrollView,Picker} from 'react-native';
 
+import { Card } from 'react-native-paper';
+import {LinearGradient} from 'expo-linear-gradient';
+
+export default function Settings({navigation}) {
+    const [selectedValue, setSelectedValue] = useState("java");
     const[limit, setLimit]= React.useState(true)
     const[silent, setSilent]= React.useState(false)
     const[workHours, setWorkHours] = React.useState(false)
@@ -61,89 +65,128 @@ export default function Settings({navigation}) {
 
 
     return(
-        <View >
+        <ScrollView
+          style={{
+            flexGrow: 0,
+            width: "100%",
+            height: "100%",
+        }}>
+        <View style={styles.row1}>
+            <View style = {{flex: 1,padding:5,margin:5}}>
+                <Card>
+                    <TouchableRipple onPress={()=>{toggleSilent()}}>
+                        <View style={styles.preference}>
+                            <Text>Quiet Mode</Text>
+                            <View pointerEvents="none">
+                                <Switch value={silent}/>
+                            </View>
+                            </View>
+                    </TouchableRipple>
+                </Card>
+            </View>
+        </View>
+        <View style={styles.row1}>
+                <View style = {{flex: 1,padding:5,margin:5}}>
+                    <Card>
+                        {/*<TouchableRipple onPress={()=>{toggleLimit()}}>
+                                <View style={styles.preference}>
+                                    <View >
+                                    <Text>Limitjjjj Notifications</Text>
+                                    </View>
+                                    <View >
+                                        
+                                    </View>
+                                </View>
+                        </TouchableRipple>*/}
+                        
+                            <View style={styles.preference}>
+                                <View style = {{flex: 0.6}}>
+                                <Text>Limit Notifications</Text>
+                                </View>
+                                <View style={{flex: 0.4}}>
+                                    <Picker
+                                        selectedValue={selectedValue}
+                                        style={{ height: 20, width: 150, color:'#5a647d' }}
+                                        onValueChange={(itemValue, itemIndex) => setSelectedValue(itemValue)}
+                                    >
+                                        <Picker.Item label="Do not limit" value="0" />
+                                        <Picker.Item label="Every hour" value="1" />
+                                        <Picker.Item label="Every day" value="2" />
+                                        <Picker.Item label="Every week" value="3" />
+                                    </Picker>
+                                    </View>
+                            </View>
+                        
+                        <TouchableRipple onPress={()=>{toggleWorkHours()}}>
+                            <View style={styles.preference}>
+                                <Text>Silent Work Hours</Text>
+                                <View pointerEvents="none">
+                                    <Switch value={workHours}/>
+                                </View>
+                                </View>
+                        </TouchableRipple>
 
-            <TouchableRipple onPress={()=>{toggleSilent()}}>
-                <View style={styles.preference}>
-                    <Text>Quiet Mode</Text>
-                    <View pointerEvents="none">
-                        <Switch value={silent}/>
-                    </View>
-                    </View>
-            </TouchableRipple>
+                        {/*<TouchableRipple onPress={()=>{togglePrice()}}>
+                            <View style={styles.preference}>
+                                <Text>Notify Price Change</Text>
+                                <View pointerEvents="none">
+                                    <Switch value={price}/>
+                                </View>
+                                </View>
+                        </TouchableRipple>
 
-            <TouchableRipple onPress={()=>{toggleLimit()}}>
-                <View style={styles.preference}>
-                    <Text>Limit Notifications</Text>
-                    <View pointerEvents="none">
-                        <Switch value={limit}/>
-                    </View>
-                    </View>
-            </TouchableRipple>
+                        <TouchableRipple onPress={()=>{togglePre()}}>
+                            <View style={styles.preference}>
+                                <Text>Pre-Notifications</Text>
+                                <View pointerEvents="none">
+                                    <Switch value={pre}/>
+                                </View>
+                                </View>
+                        </TouchableRipple>
 
-            <TouchableRipple onPress={()=>{toggleWorkHours()}}>
-                <View style={styles.preference}>
-                    <Text>Silent Work Hours</Text>
-                    <View pointerEvents="none">
-                        <Switch value={workHours}/>
-                    </View>
-                    </View>
-            </TouchableRipple>
+                        <TouchableRipple onPress={()=>{toggleAnnoy()}}>
+                            <View style={styles.preference}>
+                                <Text>Annoy me with Notifications</Text>
+                                <View pointerEvents="none">
+                                    <Switch value={annoy}/>
+                                </View>
+                                </View>
+                        </TouchableRipple>*/}
 
-            <TouchableRipple onPress={()=>{togglePrice()}}>
-                <View style={styles.preference}>
-                    <Text>Notify Price Change</Text>
-                    <View pointerEvents="none">
-                        <Switch value={price}/>
-                    </View>
-                    </View>
-            </TouchableRipple>
+                        <TouchableRipple onPress={()=>{toggleNewDeal()}}>
+                            <View style={styles.preference}>
+                                <Text>Notify me on Hot Deals!</Text>
+                                <View pointerEvents="none">
+                                    <Switch value={newDeal}/>
+                                </View>
+                                </View>
+                        </TouchableRipple>
 
-            <TouchableRipple onPress={()=>{togglePre()}}>
-                <View style={styles.preference}>
-                    <Text>Pre-Notifications</Text>
-                    <View pointerEvents="none">
-                        <Switch value={pre}/>
+                        <TouchableRipple onPress={()=>{toggleTextNotif()}}>
+                            <View style={styles.preference}>
+                                <Text>Send Text Notification</Text>
+                                <View pointerEvents="none">
+                                    <Switch value={textNotif}/>
+                                </View>
+                                </View>
+                        </TouchableRipple>
+                        </Card>
                     </View>
-                    </View>
-            </TouchableRipple>
-
-            <TouchableRipple onPress={()=>{toggleAnnoy()}}>
-                <View style={styles.preference}>
-                    <Text>Annoy me with Notifications</Text>
-                    <View pointerEvents="none">
-                        <Switch value={annoy}/>
-                    </View>
-                    </View>
-            </TouchableRipple>
-
-            <TouchableRipple onPress={()=>{toggleNewDeal()}}>
-                <View style={styles.preference}>
-                    <Text>Notify me on Hot Deals!</Text>
-                    <View pointerEvents="none">
-                        <Switch value={newDeal}/>
-                    </View>
-                    </View>
-            </TouchableRipple>
-
-            <TouchableRipple onPress={()=>{toggleTextNotif()}}>
-                <View style={styles.preference}>
-                    <Text>Send Text Notification</Text>
-                    <View pointerEvents="none">
-                        <Switch value={textNotif}/>
-                    </View>
-                    </View>
-            </TouchableRipple>
-
-            <TouchableRipple onPress={()=>{toggleBackground()}}>
-                <View style={styles.preference}>
-                    <Text>Allow App to Run in Background</Text>
-                    <View pointerEvents="none">
-                        <Switch value={background}/>
-                    </View>
-                    </View>
-            </TouchableRipple>
-
+                </View>
+                <View style={styles.row1}>
+                    <View style = {{flex: 1,padding:5,margin:5}}>
+                        <Card>
+                            <TouchableRipple onPress={()=>{toggleBackground()}}>
+                                <View style={styles.preference}>
+                                    <Text>Allow App to Run in Background</Text>
+                                    <View pointerEvents="none">
+                                        <Switch value={background}/>
+                                    </View>
+                                    </View>
+                            </TouchableRipple>
+                    </Card>
+                </View>
+            </View>
             <View style={styles.preference2}>
             <LinearGradient 
                         colors={['#08d4c4', '#01ab9d']}
@@ -159,8 +202,8 @@ export default function Settings({navigation}) {
                             </TouchableOpacity>
             </LinearGradient>
             </View>
-        </View>
         
+    </ScrollView>   
 
         
     )
