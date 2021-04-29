@@ -10,8 +10,8 @@ import {
     Switch
 } from 'react-native-paper';
 import { useState } from "react";
-import { View,StyleSheet,TouchableOpacity,  ScrollView,Picker} from 'react-native';
-
+import { View,StyleSheet,TouchableOpacity,  ScrollView,Picker,Button, Platform} from 'react-native';
+import DateTimePicker from '@react-native-community/datetimepicker';
 import { Card } from 'react-native-paper';
 import {LinearGradient} from 'expo-linear-gradient';
 
@@ -63,7 +63,21 @@ export default function Settings({navigation}) {
         setBackground(!background);
     }
 
-
+    const [date, setDate] = useState(new Date(1598051730000));
+    const [mode, setMode] = useState('date');
+    const [show, setShow] = useState(false);
+    const onChange = (event, selectedDate) => {
+        const currentDate = selectedDate || date;
+        setShow(Platform.OS === 'ios');
+        setDate(currentDate);
+      };
+      const showTimepicker = () => {
+        showMode('time');
+      };
+      const showMode = (currentMode) => {
+        setShow(true);
+        setMode(currentMode);
+      };
     return(
         <ScrollView
           style={{
@@ -116,7 +130,12 @@ export default function Settings({navigation}) {
                                     </Picker>
                                     </View>
                             </View>
-                        
+                            </Card>
+                </View>
+            </View> 
+            <View style={styles.row1}>
+                <View style = {{flex: 1,padding:5,margin:5}}>
+                    <Card>
                         <TouchableRipple onPress={()=>{toggleWorkHours()}}>
                             <View style={styles.preference}>
                                 <Text>Silent Work Hours</Text>
@@ -125,7 +144,60 @@ export default function Settings({navigation}) {
                                 </View>
                                 </View>
                         </TouchableRipple>
-
+                        <View style = {{flex: 1,padding:5,margin:5,flexDirection:'row',justifyContent:"space-between"}}>
+                            <View style = {{flex: 1}}>
+                                <LinearGradient 
+                                            colors={['#08d4c4', '#01ab9d']}
+                                            style={{width: '60%',
+                                            height: 30,
+                                            justifyContent: 'center',
+                                            alignItems: 'center',
+                                            borderRadius: 10}}
+                                            >
+                                                <TouchableOpacity onPress={showTimepicker}>
+                                                    <Text style={{
+                                                        fontSize: 13,
+                                                        fontWeight: 'bold',
+                                                        color:'#fff'
+                                                    }
+                                                    }>
+                                                        Starting time
+                                                    </Text>
+                                                </TouchableOpacity>
+                                </LinearGradient>
+                            </View>
+                            <View style={{flex: 1}}>
+                            <LinearGradient 
+                                            colors={['#08d4c4', '#01ab9d']}
+                                            style={{width: '60%',
+                                            height: 30,
+                                            justifyContent: 'center',
+                                            alignItems: 'center',
+                                            borderRadius: 10}}
+                                            >
+                                                <TouchableOpacity onPress={showTimepicker}>
+                                                    <Text style={{
+                                                        fontSize: 13,
+                                                        fontWeight: 'bold',
+                                                        color:'#fff'
+                                                    }
+                                                    }>
+                                                        Ending time
+                                                    </Text>
+                                                </TouchableOpacity>
+                                </LinearGradient>
+                            </View>
+                        </View>
+                            {show && (
+                                <DateTimePicker
+                                testID="dateTimePicker"
+                                value={date}
+                                mode={mode}
+                                is24Hour={true}
+                                display="default"
+                                onChange={onChange}
+                                />
+                            )}
                         {/*<TouchableRipple onPress={()=>{togglePrice()}}>
                             <View style={styles.preference}>
                                 <Text>Notify Price Change</Text>
@@ -152,7 +224,12 @@ export default function Settings({navigation}) {
                                 </View>
                                 </View>
                         </TouchableRipple>*/}
-
+                    </Card>
+                </View>
+            </View> 
+            <View style={styles.row1}>
+                <View style = {{flex: 1,padding:5,margin:5}}>
+                    <Card>
                         <TouchableRipple onPress={()=>{toggleNewDeal()}}>
                             <View style={styles.preference}>
                                 <Text>Notify me on Hot Deals!</Text>
@@ -161,7 +238,12 @@ export default function Settings({navigation}) {
                                 </View>
                                 </View>
                         </TouchableRipple>
-
+                        </Card>
+                </View>
+            </View> 
+            <View style={styles.row1}>
+                <View style = {{flex: 1,padding:5,margin:5}}>
+                    <Card>
                         <TouchableRipple onPress={()=>{toggleTextNotif()}}>
                             <View style={styles.preference}>
                                 <Text>Send Text Notification</Text>
