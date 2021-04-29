@@ -279,7 +279,7 @@ export default function Settings({navigation}) {
                                     color:'#fff'
                                 }
                                 ]}>
-                                    Save
+                                    Back
                                 </Text>
                             </TouchableOpacity>
             </LinearGradient>
