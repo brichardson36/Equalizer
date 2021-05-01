@@ -181,7 +181,7 @@ export default function Home({route, navigation}) {
                             // console.log(token)
                             navigation.navigate('DetailsScreen', {
                             itemID: "60693091b2211d0004faf0fe",
-                            token: token
+                            token: pushToken
                         })
                     }}
                         />
@@ -221,7 +221,7 @@ export default function Home({route, navigation}) {
                         //onPress={() => this.props.navigation.navigate('Details')} 
                         onPress={()=>navigation.navigate('DetailsScreen', {
                             itemID: "6089c346084bf50004765964",
-                            token: token
+                            token: pushToken
                         })}
                         />
                         </View>
@@ -255,7 +255,7 @@ export default function Home({route, navigation}) {
                         //onPress={() => this.props.navigation.navigate('Details')} 
                         onPress={()=>navigation.navigate('DetailsScreen', {
                             itemID: "6089c3ed084bf50004765965",
-                            token: token
+                            token: pushToken
                         })}
                         />
                         </View>
