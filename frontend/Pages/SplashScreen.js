@@ -4,17 +4,24 @@ import { View, Text, Button,Dimensions,TouchableOpacity, StyleSheet } from 'reac
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import * as Animatable from 'react-native-animatable';
 import {LinearGradient} from 'expo-linear-gradient';
+import {useTheme} from '@react-navigation/native'
+import { createPortal } from 'react-dom';
 const SplashScreen = ({navigation}) => {
+    const{colors}=useTheme();
     return (
       <View style={styles.container}>
         <View style={styles.header}>
             <Text style={styles.title}>Equalizer</Text>
         </View>
         <Animatable.View 
-        style={styles.footer}
+        style={[styles.footer,{
+            backgroundColor:colors.background
+        }]}
         animation="fadeInUpBig"
         >
-            <Text style={styles.title}>We make shopping Easier</Text>
+            <Text style={[styles.title,{
+                color:colors.text
+            }]}>We make shopping Easier</Text>
             <Text style={styles.text}>Sign in with account</Text>
             <View stye={styles.button}>
             <TouchableOpacity onPress={()=>navigation.navigate('SignInScreen')}>

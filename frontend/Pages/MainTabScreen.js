@@ -2,19 +2,19 @@ import React from 'react';
 import { createStackNavigator } from '@react-navigation/stack';
 import Icon from 'react-native-vector-icons/Ionicons';
 import { createMaterialBottomTabNavigator } from '@react-navigation/material-bottom-tabs';
-
+import Icon2 from 'react-native-vector-icons/MaterialCommunityIcons';
 import Login from "./Login";
 import Home from "./Home";
 import Profile from "./Profile";
 import Update from "./Update";
-import ExploreScreen from "./ExploreScreen";
+import SupportScreen from "./SupportScreen";
 import SettingsScreen from "./SettingsScreen"
 
 const HomeStack = createStackNavigator();
 const LoginStack = createStackNavigator();
 const ProfileStack = createStackNavigator();
 const UpdateStack = createStackNavigator();
-const ExploreStack = createStackNavigator();
+const SupportStack = createStackNavigator();
 const Tab=createMaterialBottomTabNavigator();
 
 const MainTabScreen=()=>(
@@ -58,13 +58,13 @@ const MainTabScreen=()=>(
       }}
     />
     <Tab.Screen
-      name="Explore"
-      component={ExploreStackScreen}
+      name="Support"
+      component={SupportStackScreen}
       options={{
-        tabBarLabel: 'Explore',
+        tabBarLabel: 'Support',
         tabBarColor:'#d02860',
         tabBarIcon: ({ color }) => (
-          <Icon name="ios-aperture" color={color} size={26} />
+          <Icon2 name='account-check-outline' color={color} size={26} />
         ),
       }}
     />
@@ -159,9 +159,9 @@ const HomeStackScreen=({navigation})=>(
       },
     }}
     >
-      <UpdateStack.Screen name = "Update" component = {Update} options = {{
+      <UpdateStack.Screen name = "Updates" component = {Update} options = {{
         headerLeft:()=>(
-          <Icon.Button name = "ios-notifications" size = {25}
+          <Icon.Button name = "ios-menu" size = {25}
           backgroundColor = "#1f65ff"
           onPress={()=>navigation.openDrawer()}>
           </Icon.Button>
@@ -170,8 +170,8 @@ const HomeStackScreen=({navigation})=>(
     </UpdateStack.Navigator>
   )
 
-  const ExploreStackScreen=({navigation})=>(
-    <ExploreStack.Navigator
+  const SupportStackScreen=({navigation})=>(
+    <SupportStack.Navigator
     screenOptions={{
       headerStyle:{
         backgroundColor: '#d02860'
@@ -182,13 +182,15 @@ const HomeStackScreen=({navigation})=>(
       },
     }}
     >
-      <ExploreStack.Screen name = "Explore" component = {ExploreScreen} options = {{
+      <SupportStack.Screen name = "Support" component = {SupportScreen} options = {{
         headerLeft:()=>(
-          <Icon.Button name = "ios-aperture" size = {25}
+          <Icon.Button name = "ios-menu" size = {25}
           backgroundColor = "#d02860"
           onPress={()=> navigation.openDrawer()}>
           </Icon.Button>
         )
       }}/>
-    </ExploreStack.Navigator>
+    </SupportStack.Navigator>
   )
+
+

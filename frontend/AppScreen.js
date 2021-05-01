@@ -2,12 +2,19 @@ import 'react-native-gesture-handler';
 import React, {useState} from 'react';
 import { StyleSheet, Text, View, TextInput, TouchableOpacity } from 'react-native';
 
-import { NavigationContainer } from '@react-navigation/native';
+import { NavigationContainer,
+  DefaultTheme as NavigationDefaultTheme,
+   DarkTheme as NavigationDarkTheme }
+    from '@react-navigation/native';
 import { createDrawerNavigator } from '@react-navigation/drawer';
-
+import {Provider as PaperProvider,
+  DefaultTheme as PaperDefaultTheme,
+   DarkTheme as PaperDarkTheme}
+    from 'react-native-paper';
 import MainTabScreen from "./Pages/MainTabScreen";
 import {DrawerContent} from './Pages/DrawerContent';
 import SupportScreen from './Pages/SupportScreen';
+import DetailsScreen from './Pages/DetailsScreen';
 import RootStackScreen from './Pages/RootStackScreen';
 import SettingsScreen from './Pages/SettingsScreen';
 const Drawer = createDrawerNavigator();
@@ -15,7 +22,30 @@ const Drawer = createDrawerNavigator();
 export const AuthContext = React.createContext();
 
 export default function AppScreen() {
+    const [isDarkTheme,setIsDarkTheme ]=React.useState(false);
+    const CustomDefaultTheme={
+      ...NavigationDefaultTheme,
+      ...PaperDefaultTheme,
+      colors:{
+        ...NavigationDefaultTheme.colors,
+        ...PaperDefaultTheme.colors,
+        background:'#ffffff',
+        text:'#333333'
+      }
+    }
 
+    const CustomDarkTheme={
+      ...NavigationDarkTheme,
+      ...PaperDarkTheme,
+      colors:{
+        ...NavigationDarkTheme.colors,
+        ...PaperDarkTheme.colors,
+        background:'#333333',
+        text:'#ffffff'
+      }
+    }
+    
+    const theme=isDarkTheme? CustomDefaultTheme : CustomDarkTheme;
     const [state, dispatch] = React.useReducer(
         (prevState, action) => {
           switch (action.type) {
@@ -88,13 +118,17 @@ export default function AppScreen() {
     
             dispatch({ type: 'SIGN_IN', token: 'dummy-auth-token' });
           },
+          toggleTheme: () =>{
+            setIsDarkTheme(isDarkTheme=> !isDarkTheme);
+          }
         }),
         []
       );
 
     return(
+      <PaperProvider theme={theme}>
         <AuthContext.Provider value = {authContext}>
-            <NavigationContainer style = {styles.container}>
+            <NavigationContainer theme={theme} style = {styles.container}>
                 {(state.isLoading || state.userToken == null) && 
                 <RootStackScreen/>
                 }
@@ -103,10 +137,13 @@ export default function AppScreen() {
                     <Drawer.Screen name="HomeDrawer" component={MainTabScreen} />
                     <Drawer.Screen name="SupportScreen" component={SupportScreen} />
                     <Drawer.Screen name="Settings" component={SettingsScreen} />
+                    <Drawer.Screen name="DetailsScreen" component={DetailsScreen} />
+                    
                 </Drawer.Navigator>
                 }
             </NavigationContainer>
         </AuthContext.Provider>
+        </PaperProvider>
     )
 }
 

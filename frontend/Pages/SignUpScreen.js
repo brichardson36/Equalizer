@@ -5,7 +5,9 @@ import * as Animatable from 'react-native-animatable';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import Feather from 'react-native-vector-icons/Feather';
 import {LinearGradient} from 'expo-linear-gradient';
+import {useTheme} from 'react-native-paper';
 const SignUpScreen = ({navigation}) => {
+    const{colors}=useTheme();
     const [data, setData] = React.useState({
         email: '',
         password: '',
@@ -85,19 +87,25 @@ const SignUpScreen = ({navigation}) => {
             <Text style={styles.text_header}>Register Now</Text>
         </View>
         <Animatable.View 
-        style={styles.footer}
+        style={[styles.footer,{
+            backgroundColor:colors.background
+        }]}
         animation="fadeInUpBig"
         >
-            <Text style={styles.text_footer}>Email</Text>
+            <Text style={[styles.text_footer,{
+                color:colors.text
+            }]}>Email</Text>
             <View style={styles.action}>
                 <FontAwesome
                     name="user-o"
-                    color="#05375a"
+                    color={colors.text}
                     size={20}
                 />
                 <TextInput
                     placeholder="Your Email"
-                    style={styles.textInput}
+                    style={[styles.textInput,{
+                        color:colors.text
+                    }]}
                     autoCapitalize="none"
                     onChangeText={(val)=>textInputChange(val)}I
                 />
@@ -107,7 +115,7 @@ const SignUpScreen = ({navigation}) => {
                 >
                     <Feather
                     name="check-circle"
-                    color="green"
+                    color={colors.text}
                     size={20}
                 />
                 </Animatable.View>
@@ -115,13 +123,14 @@ const SignUpScreen = ({navigation}) => {
                 :null}
             </View>
             <Text style={[styles.text_footer,{
+                color:colors.text,
                 marginTop:35
             }]}>Password</Text>
             
             <View style={styles.action}>
                 <Feather
                     name="lock"
-                    color="#05375a"
+                    color={colors.text}
                     size={20}
                 />
                 <TextInput
@@ -153,13 +162,14 @@ const SignUpScreen = ({navigation}) => {
             </View>
 
             <Text style={[styles.text_footer,{
+                color:colors.text,
                 marginTop:35
             }]}>Confirm Password</Text>
             
             <View style={styles.action}>
                 <Feather
                     name="lock"
-                    color="#05375a"
+                    color={colors.text}
                     size={20}
                 />
                 <TextInput
@@ -191,15 +201,21 @@ const SignUpScreen = ({navigation}) => {
             </View>
 
             <View style={styles.button}>
-                    <LinearGradient
-                    colors={['#08d4c4', '#01ab9d']}
-                    style={styles.signIn}
-                    >
-                        <Text style={[styles.textSign,{
-                            color:'#fff'
-                        }
-                        ]}>Sign Up</Text>
-                    </LinearGradient>
+                    
+                    <LinearGradient 
+                        colors={['#08d4c4', '#01ab9d']}
+                        style={styles.signIn}
+                        >
+                            <TouchableOpacity onPress={()=>navigation.goBack()}>
+                                <Text style={[styles.textSign,{
+                                    color:'#fff'
+                                }
+                                ]}>
+                                    Sign Up
+                                </Text>
+                            </TouchableOpacity>
+                        </LinearGradient>
+
                     <TouchableOpacity
                         onPress={()=>navigation.goBack()}
                         style={[styles.signIn,{

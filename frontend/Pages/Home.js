@@ -1,5 +1,5 @@
 import React, {useEffect} from 'react';
-import { StyleSheet, Image, Text, View, TextInput, TouchableOpacity } from 'react-native';
+import { StyleSheet, Image, Text, View, TextInput, TouchableOpacity,  ScrollView} from 'react-native';
 import { AuthContext } from '../AppScreen';
 import { Searchbar ,Card } from 'react-native-paper';
 import { Button } from 'react-native-elements';
@@ -19,7 +19,6 @@ import {
 } from 'react-native-paper';
 import {useTheme} from '@react-navigation/native';
 import {StatusBar} from 'react-native';
-
 export default function Home({navigation}) {
     const{colors}=useTheme();
     useEffect(()=> {
@@ -72,8 +71,13 @@ export default function Home({navigation}) {
     const toggleTrackTwo=()=>{
         setTrackTwo(!trackTwo);
     }
+    const theme=useTheme();
 
+    const [searchQuery, setSearchQuery] = React.useState('');
+
+    const onChangeSearch = query => setSearchQuery(query);
     return(
+        
         <View style = {{flex: 1, flexDirection: "column"}}>
             {/*<StatusBar barStyle={theme.dark? "light-content":"dark-content"}/>*/}
             <StatusBar barStyle="light-content"/>
@@ -165,6 +169,16 @@ export default function Home({navigation}) {
                                     added 2h ago
                                  </Text>
                             </View>
+                            {/*<View  style = {{flex: 1, marginLeft: 50}}>
+                            <TouchableRipple  onPress={()=>{toggleTrack()}}>
+                                <View style={styles.preference}>
+                                    <Text style={{color: colors.text}}>Track?</Text>
+                                    <View pointerEvents="none">
+                                        <Switch value={track}/>
+                                    </View>
+                                    </View>
+                            </TouchableRipple>
+                            </View>*/}
                         </View>
                         <Button
                         type="clear"
@@ -201,6 +215,16 @@ export default function Home({navigation}) {
                                     added 2h ago
                                  </Text>
                             </View>
+                            {/*<View  style = {{flex: 1, marginLeft: 50}}>
+                            <TouchableRipple  onPress={()=>{toggleTrack()}}>
+                                <View style={styles.preference}>
+                                    <Text style={{color: colors.text}}>Track?</Text>
+                                    <View pointerEvents="none">
+                                        <Switch value={track}/>
+                                    </View>
+                                    </View>
+                            </TouchableRipple>
+                            </View>*/}
                         </View>
                         <Button
                         type="clear"
@@ -232,6 +256,16 @@ export default function Home({navigation}) {
                                     added 2h ago
                                  </Text>
                             </View>
+                            {/*<View  style = {{flex: 1, marginLeft: 50}}>
+                            <TouchableRipple  onPress={()=>{toggleTrack()}}>
+                                <View style={styles.preference}>
+                                    <Text style={{color: colors.text}}>Track?</Text>
+                                    <View pointerEvents="none">
+                                        <Switch value={track}/>
+                                    </View>
+                                    </View>
+                            </TouchableRipple>
+                            </View>*/}
                         </View>
                         <Button
                         type="clear"
@@ -244,6 +278,79 @@ export default function Home({navigation}) {
                 </View>
             </View>
         </ScrollView>
+            
+            {/*<View style = {{flex: 1, flexDirection: "row", paddingTop:30}}>
+                <View>
+                    <Image source={{ uri: imgContent }} style={{ width: 150, height: 150 }} />
+                </View>
+                <View style = {{ flex: 1, flexDirection: "column"}}>
+                    <View style = {{ flex: 1, paddingLeft: 15 }}>
+                        <Text style={{color: colors.text}}>{description}</Text>
+                    </View>
+                </View>
+            </View>
+            <View style = {{flex: 1, marginTop: 20}}>
+            <TouchableRipple onPress={()=>{toggleTrack()}}>
+                <View style={styles.preference}>
+                    <Text style={{color: colors.text}}>${price} - Track?</Text>
+                    <View pointerEvents="none">
+                        <Switch value={track}/>
+                    </View>
+                    </View>
+            </TouchableRipple>
+            </View>
+            
+
+
+            <View style={styles.row1}>
+            
+                <View style = {{flex: 1,padding:5,margin:5}}>
+                    <Card >
+                        <View style={{padding:5}}>
+                        <Text style={{marginBottom: 10, marginTop: 10, color: colors.text }} h2>
+                            BackPack
+                        </Text>
+                        <Image
+                        style={{ width: "100%", height: 150 }}
+                        resizeMode="cover"
+                        source={{ uri: imgContent }}
+                        />
+                        <View style = {{flex: 1, flexDirection: 'row', justifyContent: 'space-between' }}>
+                            <View style = {{flex: 1}}>
+                                <Text style={styles.price} h4>
+                                    $ {price}
+                                </Text>
+                            
+                                <Text h6 style={styles.description}>
+                                    added 2h ago
+                                 </Text>
+                            </View>
+                        </View>
+                        <Button
+                        type="clear"
+                        title='Details'
+                        //onPress={() => this.props.navigation.navigate('Details')} 
+                        onPress={()=>navigation.navigate('DetailsScreen')}
+                        />
+                        </View>
+                    </Card>
+                </View>
+                <View style = {{ flex: 1, flexDirection: "column"}}>
+                    <View style = {{ flex: 1, paddingLeft: 15 }}>
+                        <Text style={{color: colors.text}}>{descriptionTwo}</Text>
+                    </View>
+                </View>
+            </View>
+            <View style = {{flex: 1, marginTop: 50}}>
+            <TouchableRipple onPress={()=>{toggleTrackTwo()}}>
+                <View style={styles.preference}>
+                    <Text style={{color: colors.text}}>${priceTwo} - Track?</Text>
+                    <View pointerEvents="none">
+                        <Switch value={trackTwo}/>
+                    </View>
+                    </View>
+            </TouchableRipple>
+        </View>*/}
 
         </View>
     )
@@ -322,5 +429,54 @@ const styles = StyleSheet.create({
       justifyContent: 'space-between',
       paddingVertical: 12,
       paddingHorizontal: 16,
+    },
+    scrollViewHolder:
+   {
+      
+   },
+
+   item:
+   {
+      padding: 10,
+      color: '#ffffff',
+      fontSize: 18,
+      margin: 1,
+      borderColor: '#ffffff',
+      borderWidth: 1,
+      backgroundColor: '#009387'
+   },
+
+   separator:
+   {
+      width: 1, 
+   },
+   container2:
+   {
+      flex: 0.6,
+      justifyContent: 'center'
+   },
+
+   name: {
+    color: '#5a647d',
+    fontWeight: 'bold',
+    fontSize: 30
+    },
+    price: {
+        fontWeight: 'bold',
+        marginBottom: 10,
+        marginTop: 10,
+        color: '#5a647d',
+    },
+    description: {
+        fontSize: 10,
+        color: '#c1c4cd'
+    },
+    row1: {
+        flex: 1,
+        flexDirection: 'row',
+        justifyContent: 'center',
+    },
+    col1: {
+        flex: 1,
     },
   });
