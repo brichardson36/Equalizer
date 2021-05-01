@@ -59,7 +59,7 @@ export default function Home(props) {
                 phone: phone,
             })
         }).then(res => {
-            console.log(res);
+            // console.log(res);
         })
     }
 }

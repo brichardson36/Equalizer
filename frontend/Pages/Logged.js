@@ -7,7 +7,7 @@ export default function Home(props) {
 
     useEffect(() => {
         // name = String(props.route.params.email);
-        console.log(props.route.params.email.email)
+        // console.log(props.route.params.email.email)
     },[]);
     
     return(

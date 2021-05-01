@@ -289,7 +289,7 @@ export default function Update({navigation}) {
             res => {
                 res.json().then(
                     data=>{
-                        console.log(data)
+                        // console.log(data)
                         setImgContent(data.image)
                         setDescription(data.description)
                         setPrice(data.price)

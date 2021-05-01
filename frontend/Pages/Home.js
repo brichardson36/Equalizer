@@ -19,58 +19,58 @@ import {
 } from 'react-native-paper';
 import {useTheme} from '@react-navigation/native';
 import {StatusBar} from 'react-native';
-export default function Home({navigation}) {
+import { min } from 'react-native-reanimated';
+export default function Home({route, navigation}) {
     const{colors}=useTheme();
     useEffect(()=> {
-        registerForPushNotificationsAsync();
         getContent();
-    }, [])
 
-    registerForPushNotificationsAsync = async () => {
-        if (Constants.isDevice) {
-          const { status: existingStatus } = await Notifications.getPermissionsAsync();
-          let finalStatus = existingStatus;
-          if (existingStatus !== 'granted') {
-            const { status } = await Notifications.requestPermissionsAsync();
-            finalStatus = status;
-          }
-          if (finalStatus !== 'granted') {
-            alert('Failed to get push token for push notification!');
-            return;
-          }
-          const token = (await Notifications.getExpoPushTokenAsync()).data;
-          console.log(token);
-          this.setState({ expoPushToken: token });
-        } else {
-          alert('Must use physical device for Push Notifications');
-        }
-      
-        if (Platform.OS === 'android') {
-          Notifications.setNotificationChannelAsync('default', {
-            name: 'default',
-            importance: Notifications.AndroidImportance.MAX,
-            vibrationPattern: [0, 250, 250, 250],
-            lightColor: '#FF231F7C',
-          });
-        }
+        const registerForPushNotificationsAsync = async () => {
+            if (Constants.isDevice) {
+              const { status: existingStatus } = await Notifications.getPermissionsAsync();
+              let finalStatus = existingStatus;
+              if (existingStatus !== 'granted') {
+                const { status } = await Notifications.requestPermissionsAsync();
+                finalStatus = status;
+              }
+              if (finalStatus !== 'granted') {
+                alert('Failed to get push token for push notification!');
+                return
+              }
+              const toke = (await Notifications.getExpoPushTokenAsync()).data;
+              index = toke.indexOf("[")
+              finalIndex = toke.indexOf("]")
+              token = (toke.substring(index + 1, finalIndex))
+              setPushToken(token)
+              return
+            } else {
+              alert('Must use physical device for Push Notifications');
+            }
+          
+            if (Platform.OS === 'android') {
+              Notifications.setNotificationChannelAsync('default', {
+                name: 'default',
+                importance: Notifications.AndroidImportance.MAX,
+                vibrationPattern: [0, 250, 250, 250],
+                lightColor: '#FF231F7C',
+              });
+            }
         };
+
+        registerForPushNotificationsAsync()
+
+    }, [])
         
     const[imgContent, setImgContent] = React.useState('none')
-    const[description, setDescription] = React.useState('none')
     const[price, setPrice] = React.useState('none')
-    const[track, setTrack] = React.useState(false)
-    const[trackTwo, setTrackTwo] = React.useState(false)
     const[imgContentTwo, setImgContentTwo] = React.useState('none')
-    const[descriptionTwo, setDescriptionTwo] = React.useState('none')
     const[priceTwo, setPriceTwo] = React.useState('none')
+    const[imgContentThree, setImgContentThree] = React.useState('none')
+    const[priceThree, setPriceThree] = React.useState('none')
+    const[imgContentFour, setImgContentFour] = React.useState('none')
+    const[priceFour, setPriceFour] = React.useState('none')
+    const[pushToken, setPushToken] = React.useState()
 
-    const toggleTrack=()=>{
-        setTrack(!track);
-    }
-
-    const toggleTrackTwo=()=>{
-        setTrackTwo(!trackTwo);
-    }
     const theme=useTheme();
 
     const [searchQuery, setSearchQuery] = React.useState('');
@@ -143,7 +143,10 @@ export default function Home({navigation}) {
                         type="clear"
                         title='Details'
                         //onPress={() => this.props.navigation.navigate('Details')} 
-                        onPress={()=>navigation.navigate('DetailsScreen')}
+                        onPress={()=>navigation.navigate('DetailsScreen', {
+                            itemID: "60693043b2211d0004faf0fc",
+                            token: pushToken
+                        })}
                         />
                         </View>
                     </Card>
@@ -152,7 +155,7 @@ export default function Home({navigation}) {
                     <Card >
                     <View style={{padding:5}}>
                         <Text style={{marginBottom: 10, marginTop: 10, color: colors.text }} h2>
-                            BackPack
+                            Fit Shirt
                         </Text>
                         <Image
                         style={{ width: "100%", height: 150 }}
@@ -166,25 +169,21 @@ export default function Home({navigation}) {
                                 </Text>
                             
                                 <Text h6 style={styles.description}>
-                                    added 2h ago
+                                    added 4h ago
                                  </Text>
                             </View>
-                            {/*<View  style = {{flex: 1, marginLeft: 50}}>
-                            <TouchableRipple  onPress={()=>{toggleTrack()}}>
-                                <View style={styles.preference}>
-                                    <Text style={{color: colors.text}}>Track?</Text>
-                                    <View pointerEvents="none">
-                                        <Switch value={track}/>
-                                    </View>
-                                    </View>
-                            </TouchableRipple>
-                            </View>*/}
                         </View>
                         <Button
                         type="clear"
                         title='Details'
                         //onPress={() => this.props.navigation.navigate('Details')} 
-                        onPress={()=>navigation.navigate('DetailsScreen')}
+                        onPress={()=>{
+                            // console.log(token)
+                            navigation.navigate('DetailsScreen', {
+                            itemID: "60693091b2211d0004faf0fe",
+                            token: token
+                        })
+                    }}
                         />
                         </View>
                     </Card>
@@ -198,39 +197,32 @@ export default function Home({navigation}) {
                     <Card >
                         <View style={{padding:5}}>
                         <Text style={{marginBottom: 10, marginTop: 10, color: colors.text }} h2>
-                            BackPack
+                            Pencil
                         </Text>
                         <Image
                         style={{ width: "100%", height: 150 }}
                         resizeMode="cover"
-                        source={{ uri: imgContent }}
+                        source={{ uri: imgContentThree }}
                         />
                         <View style = {{flex: 1, flexDirection: 'row', justifyContent: 'space-between' }}>
                             <View style = {{flex: 1}}>
                                 <Text style={styles.price} h4>
-                                    $ {price}
+                                    $ {priceThree}
                                 </Text>
                             
                                 <Text h6 style={styles.description}>
-                                    added 2h ago
+                                    added 1d ago
                                  </Text>
                             </View>
-                            {/*<View  style = {{flex: 1, marginLeft: 50}}>
-                            <TouchableRipple  onPress={()=>{toggleTrack()}}>
-                                <View style={styles.preference}>
-                                    <Text style={{color: colors.text}}>Track?</Text>
-                                    <View pointerEvents="none">
-                                        <Switch value={track}/>
-                                    </View>
-                                    </View>
-                            </TouchableRipple>
-                            </View>*/}
                         </View>
                         <Button
                         type="clear"
                         title='Details'
                         //onPress={() => this.props.navigation.navigate('Details')} 
-                        onPress={()=>navigation.navigate('DetailsScreen')}
+                        onPress={()=>navigation.navigate('DetailsScreen', {
+                            itemID: "6089c346084bf50004765964",
+                            token: token
+                        })}
                         />
                         </View>
                     </Card>
@@ -239,119 +231,38 @@ export default function Home({navigation}) {
                     <Card >
                         <View style={{padding:5}}>
                         <Text style={{marginBottom: 10, marginTop: 10, color: colors.text }} h2>
-                            BackPack
+                            Everything Dogs
                         </Text>
                         <Image
                         style={{ width: "100%", height: 150 }}
                         resizeMode="cover"
-                        source={{ uri: imgContentTwo }}
+                        source={{ uri: imgContentFour }}
                         />
                         <View style = {{flex: 1, flexDirection: 'row', justifyContent: 'space-between' }}>
                             <View style = {{flex: 1}}>
                                 <Text style={styles.price} h4>
-                                    $ {priceTwo}
+                                    $ {priceFour}
                                 </Text>
                             
                                 <Text h6 style={styles.description}>
-                                    added 2h ago
+                                    added 3d ago
                                  </Text>
                             </View>
-                            {/*<View  style = {{flex: 1, marginLeft: 50}}>
-                            <TouchableRipple  onPress={()=>{toggleTrack()}}>
-                                <View style={styles.preference}>
-                                    <Text style={{color: colors.text}}>Track?</Text>
-                                    <View pointerEvents="none">
-                                        <Switch value={track}/>
-                                    </View>
-                                    </View>
-                            </TouchableRipple>
-                            </View>*/}
                         </View>
                         <Button
                         type="clear"
                         title='Details'
                         //onPress={() => this.props.navigation.navigate('Details')} 
-                        onPress={()=>navigation.navigate('DetailsScreen')}
+                        onPress={()=>navigation.navigate('DetailsScreen', {
+                            itemID: "6089c3ed084bf50004765965",
+                            token: token
+                        })}
                         />
                         </View>
                     </Card>
                 </View>
             </View>
         </ScrollView>
-            
-            {/*<View style = {{flex: 1, flexDirection: "row", paddingTop:30}}>
-                <View>
-                    <Image source={{ uri: imgContent }} style={{ width: 150, height: 150 }} />
-                </View>
-                <View style = {{ flex: 1, flexDirection: "column"}}>
-                    <View style = {{ flex: 1, paddingLeft: 15 }}>
-                        <Text style={{color: colors.text}}>{description}</Text>
-                    </View>
-                </View>
-            </View>
-            <View style = {{flex: 1, marginTop: 20}}>
-            <TouchableRipple onPress={()=>{toggleTrack()}}>
-                <View style={styles.preference}>
-                    <Text style={{color: colors.text}}>${price} - Track?</Text>
-                    <View pointerEvents="none">
-                        <Switch value={track}/>
-                    </View>
-                    </View>
-            </TouchableRipple>
-            </View>
-            
-
-
-            <View style={styles.row1}>
-            
-                <View style = {{flex: 1,padding:5,margin:5}}>
-                    <Card >
-                        <View style={{padding:5}}>
-                        <Text style={{marginBottom: 10, marginTop: 10, color: colors.text }} h2>
-                            BackPack
-                        </Text>
-                        <Image
-                        style={{ width: "100%", height: 150 }}
-                        resizeMode="cover"
-                        source={{ uri: imgContent }}
-                        />
-                        <View style = {{flex: 1, flexDirection: 'row', justifyContent: 'space-between' }}>
-                            <View style = {{flex: 1}}>
-                                <Text style={styles.price} h4>
-                                    $ {price}
-                                </Text>
-                            
-                                <Text h6 style={styles.description}>
-                                    added 2h ago
-                                 </Text>
-                            </View>
-                        </View>
-                        <Button
-                        type="clear"
-                        title='Details'
-                        //onPress={() => this.props.navigation.navigate('Details')} 
-                        onPress={()=>navigation.navigate('DetailsScreen')}
-                        />
-                        </View>
-                    </Card>
-                </View>
-                <View style = {{ flex: 1, flexDirection: "column"}}>
-                    <View style = {{ flex: 1, paddingLeft: 15 }}>
-                        <Text style={{color: colors.text}}>{descriptionTwo}</Text>
-                    </View>
-                </View>
-            </View>
-            <View style = {{flex: 1, marginTop: 50}}>
-            <TouchableRipple onPress={()=>{toggleTrackTwo()}}>
-                <View style={styles.preference}>
-                    <Text style={{color: colors.text}}>${priceTwo} - Track?</Text>
-                    <View pointerEvents="none">
-                        <Switch value={trackTwo}/>
-                    </View>
-                    </View>
-            </TouchableRipple>
-        </View>*/}
-
         </View>
     )
 
@@ -361,7 +272,7 @@ export default function Home({navigation}) {
                 res.json().then(
                     data=>{
                         setImgContent(data.image)
-                        setDescription(data.description)
+                        // setDescription(data.description)
                         setPrice(data.price)
                     }
                 )
@@ -372,8 +283,28 @@ export default function Home({navigation}) {
                 res.json().then(
                     data=>{
                         setImgContentTwo(data.image)
-                        setDescriptionTwo(data.description)
+                        // setDescriptionTwo(data.description)
                         setPriceTwo(data.price)
+                    }
+                )
+            }
+        )
+        fetch("https://banana-sundae-06144.herokuapp.com/api/v1/products/6089c346084bf50004765964").then(
+            res=> {
+                res.json().then(
+                    data=>{
+                        setImgContentThree(data.image)
+                        setPriceThree(data.price)
+                    }
+                )
+            }
+        )
+        fetch("https://banana-sundae-06144.herokuapp.com/api/v1/products/6089c3ed084bf50004765965").then(
+            res=> {
+                res.json().then(
+                    data=>{
+                        setImgContentFour(data.image)
+                        setPriceFour(data.price)
                     }
                 )
             }

@@ -13,25 +13,68 @@ import {
     TouchableRipple,
     Switch
 } from 'react-native-paper';
-import {useTheme} from '@react-navigation/native';
+import {useLinkProps, useTheme} from '@react-navigation/native';
 import {StatusBar} from 'react-native';
-export default function DetailsScreen({navigation}) {
+export default function DetailsScreen({route, navigation}) {
     const{colors}=useTheme();
     useEffect(()=> {
         getContent();
-    }, [])
+    }, [route.params.itemID])
 
     const[imgContent, setImgContent] = React.useState('none')
     const[description, setDescription] = React.useState('none')
     const[price, setPrice] = React.useState('none')
     const[track, setTrack] = React.useState(false)
     const[trackTwo, setTrackTwo] = React.useState(false)
-    const[imgContentTwo, setImgContentTwo] = React.useState('none')
-    const[descriptionTwo, setDescriptionTwo] = React.useState('none')
-    const[priceTwo, setPriceTwo] = React.useState('none')
+    const[itemID, setItemID] = React.useState("")
 
     const toggleTrack=()=>{
-        setTrack(!track);
+        if(track){
+            setTrack(!track);
+            console.log("set untracked")
+            var url = "https://banana-sundae-06144.herokuapp.com/api/v1/products/remove/subscribed_user/" + route.params.itemID
+            fetch(url, {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    "subscribed_user": route.params.token
+                })
+            }).then(
+                res => {
+                    res.json().then(
+                        data => {
+                            console.log(data)
+                        }
+                    )
+                }
+            )
+
+
+        } else {
+            setTrack(!track);
+            console.log("set tracked")
+            var url = "https://banana-sundae-06144.herokuapp.com/api/v1/products/append/subscribed_user/" + route.params.itemID
+            fetch(url, {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    "subscribed_user": route.params.token
+                })
+            }).then(
+                res => {
+                    res.json().then(
+                        data => {
+                            console.log(data)
+                        }
+                    )
+                }
+            )
+        }
+
     }
 
     const toggleTrackTwo=()=>{
@@ -42,16 +85,12 @@ export default function DetailsScreen({navigation}) {
     const [searchQuery, setSearchQuery] = React.useState('');
 
     const onChangeSearch = query => setSearchQuery(query);
+
     return(
         
         <View style = {{flex: 1, flexDirection: "column"}}>
             {/*<StatusBar barStyle={theme.dark? "light-content":"dark-content"}/>*/}
             <StatusBar barStyle="light-content"/>
-            
-
-
-        
-
         <ScrollView
           style={{
             flexGrow: 0,
@@ -123,67 +162,19 @@ export default function DetailsScreen({navigation}) {
                                     </TouchableOpacity>
                     </LinearGradient>
                     </View>
-                </View>
-                
-            </View>
-
-
-            
-     
+                </View>             
+            </View>            
         </ScrollView>
-            
-            {/*<View style = {{flex: 1, flexDirection: "row", paddingTop:30}}>
-                <View>
-                    <Image source={{ uri: imgContent }} style={{ width: 150, height: 150 }} />
-                </View>
-                <View style = {{ flex: 1, flexDirection: "column"}}>
-                    <View style = {{ flex: 1, paddingLeft: 15 }}>
-                        <Text style={{color: colors.text}}>{description}</Text>
-                    </View>
-                </View>
-            </View>
-            <View style = {{flex: 1, marginTop: 20}}>
-            <TouchableRipple onPress={()=>{toggleTrack()}}>
-                <View style={styles.preference}>
-                    <Text style={{color: colors.text}}>${price} - Track?</Text>
-                    <View pointerEvents="none">
-                        <Switch value={track}/>
-                    </View>
-                    </View>
-            </TouchableRipple>
-            </View>
-            
-
-            <View style = {{flex: 1, flexDirection: "row"}}>
-                <View>
-                    <Image source={{ uri: imgContentTwo }} style={{ width: 150, height: 150 }} />
-                </View>
-                <View style = {{ flex: 1, flexDirection: "column"}}>
-                    <View style = {{ flex: 1, paddingLeft: 15 }}>
-                        <Text style={{color: colors.text}}>{descriptionTwo}</Text>
-                    </View>
-                </View>
-            </View>
-            <View style = {{flex: 1, marginTop: 50}}>
-            <TouchableRipple onPress={()=>{toggleTrackTwo()}}>
-                <View style={styles.preference}>
-                    <Text style={{color: colors.text}}>${priceTwo} - Track?</Text>
-                    <View pointerEvents="none">
-                        <Switch value={trackTwo}/>
-                    </View>
-                    </View>
-            </TouchableRipple>
-        </View>*/}
 
         </View>
     )
 
     function getContent(){
-        fetch("https://banana-sundae-06144.herokuapp.com/api/v1/products/60693043b2211d0004faf0fc").then(
+        url =  "https://banana-sundae-06144.herokuapp.com/api/v1/products/" + route.params.itemID
+        fetch(url).then(
             res => {
                 res.json().then(
                     data=>{
-                        console.log(data)
                         setImgContent(data.image)
                         setDescription(data.description)
                         setPrice(data.price)
@@ -191,13 +182,23 @@ export default function DetailsScreen({navigation}) {
                 )
             }
         )
-        fetch("https://banana-sundae-06144.herokuapp.com/api/v1/products/60693091b2211d0004faf0fe").then(
+        //make an call to see if item is tracked by user
+        url = "https://banana-sundae-06144.herokuapp.com/api/v1/products/subscribed_user/" + route.params.itemID
+        fetch(url).then(
             res=> {
                 res.json().then(
                     data=>{
-                        setImgContentTwo(data.image)
-                        setDescriptionTwo(data.description)
-                        setPriceTwo(data.price)
+                        // console.log("subscribed users:")
+                        // console.log(data.subscribed_user)    
+                        // console.log("token:")             
+                        // console.log(token)
+                        index = data.subscribed_user.indexOf(route.params.token)
+                        // console.log(index)
+                        if (index == -1){
+                            setTrack(false)
+                        } else{
+                            setTrack(true)
+                        }
                     }
                 )
             }
