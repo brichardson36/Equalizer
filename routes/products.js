@@ -3,6 +3,7 @@ const express = require('express');
 // const { Category } = require('../models/category');
 const router = express.Router();
 const mongoose = require('mongoose');
+const axios = require('axios');
 
 router.get(`/`, async (req, res) =>{
 
@@ -107,28 +108,117 @@ router.put("/:id", async (req,res)=>{
 
 })
 
+router.put("/changeprice/:id", async (req,res)=>{
+    if(! mongoose.isValidObjectId(req.params.id)){
+        res.status(400).send("Invalid Product Id");
+    }
+    //const category = await Category.findById(req.body.category);
+    //if (!category) return res.status(401).send("Invalid Category")
+    const oldproduct = await Product.findById(req.params.id);
+    const product =await Product.findByIdAndUpdate(
+        req.params.id,
+        {
+            price: req.body.price,
+        },
+        {new: true}
+    ) 
+
+    if(!product){
+        return res.status(404).send('the product cannot be restocked!');
+    }
+
+
+    if(product['subscribed_user'].length==0){
+        res.send({product,message:'unable to send notification to user due to no subscriber'});
+    }
+    else{
+
+        if(oldproduct['price']>product['price']){
+            let i =0;
+            for (i = 0; i < product['subscribed_user'].length; i++) {
+                 let diff = oldproduct['price']-product['price'];
+                 axios.post('https://exp.host/--/api/v2/push/send', {
+                    to: "ExponentPushToken["+product['subscribed_user'][i]+"]",
+                    title: product['title'] + "'s price becomes lower by "+diff.toString()+" dollars",
+                    body: product['title'] + " is on discount."
+                  })
+                  .then((response) => {
+                     
+                    console.log(response);
+                    res.send({product,message:"lower by "+diff.toString()});
+                  }, (error) => {
+                    console.log(error);
+                  });
+            }
+    
+        }
+        else{
+            let i =0;
+            for (i = 0; i < product['subscribed_user'].length; i++) {
+                let diff =+product['price']-oldproduct['price'];
+                 axios.post('https://exp.host/--/api/v2/push/send', {
+                    to: "ExponentPushToken["+product['subscribed_user'][i]+"]",
+                    title: product['title'] + "'s price becomes higher by "+diff.toString()+" dollars",
+                    body: product['title'] + " becomes more expensive...."
+                  })
+                  .then((response) => {
+                     
+                    console.log(response);
+                    res.send({product,message:"higher by "+diff.toString()});
+                  }, (error) => {
+                    console.log(error);
+                  });
+            }
+    
+        }
+        
+
+
+    
+    }
+
+})
+
 router.put("/restock/:id", async (req,res)=>{
     if(! mongoose.isValidObjectId(req.params.id)){
         res.status(400).send("Invalid Product Id");
     }
     //const category = await Category.findById(req.body.category);
     //if (!category) return res.status(401).send("Invalid Category")
-
+    
     const product =await Product.findByIdAndUpdate(
         req.params.id,
         {
             in_stock: true
         },
         {new: true}
-    ).find( ).select('subscribed_user -_id')
-
+    ) 
+    console.log(product);
     if(!product){
         return res.status(404).send('the product cannot be restocked!');
     }
-    console.log(product)
-
-
-    res.send(product);
+    if(product['subscribed_user'].length==0){
+        res.send({product,message:'unable to send notification to user due to no subscriber'});
+    }
+    else{
+        let i =0;
+        for (i = 0; i < product['subscribed_user'].length; i++) {
+            
+             axios.post('https://exp.host/--/api/v2/push/send', {
+                to: "ExponentPushToken["+product['subscribed_user'][i]+"]",
+                title: product['title'] + " is in stock now!!",
+                body: product['title'] + " is on sale."
+              })
+              .then((response) => {
+                 
+                console.log(response);
+                res.send({product,message:'launch notification'});
+              }, (error) => {
+                console.log(error);
+              });
+        }
+    
+    }
 
 })
 
